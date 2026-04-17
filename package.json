@@ -1,6 +1,7 @@
 {
   "name": "xosite",
   "version": "0.1.0",
+  "description": "XplorOne 官方网站项目，包含首页、下载页、FAQ 与更新日志。",
   "private": true,
   "scripts": {
     "dev": "next dev",
