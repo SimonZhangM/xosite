@@ -1,0 +1,63 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f5f7fb;
+  --foreground: #14324f;
+  --surface: #ffffff;
+  --surface-soft: #edf3fb;
+  --brand-blue: #2e6bff;
+  --brand-blue-strong: #1d4fd8;
+  --accent-warm: #ff7d3b;
+  --accent-warm-strong: #e96421;
+  --accent-green: #14b88d;
+  --accent-green-strong: #0b8668;
+  --accent-violet: #6c79ff;
+  --accent-violet-strong: #4658da;
+  --text-strong: #15324c;
+  --text-muted: #4d6480;
+  --text-soft: #6f85a1;
+  --line: rgba(21, 50, 76, 0.1);
+  --line-strong: rgba(21, 50, 76, 0.18);
+  --shadow-soft: 0 18px 45px rgba(16, 36, 62, 0.08);
+  --shadow-lift: 0 26px 54px rgba(16, 36, 62, 0.12);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-noto-sans-sc);
+  --font-mono: var(--font-jetbrains-mono);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(circle at top left, rgba(46, 107, 255, 0.12), transparent 26%),
+    radial-gradient(circle at top right, rgba(255, 125, 59, 0.14), transparent 24%),
+    linear-gradient(180deg, #f7f9fc 0%, #f3f6fb 34%, #f6f8fb 100%);
+  color: var(--foreground);
+  font-family: var(--font-noto-sans-sc), sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+::selection {
+  background: rgba(46, 107, 255, 0.18);
+  color: var(--text-strong);
+}

@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1536, initial-scale=1.0">
+<title>XplorOne 重设计概念稿</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+  :root {
+    --bg-primary: #0C1222;
+    --bg-secondary: #151D2E;
+    --bg-card: rgba(255,255,255,0.03);
+    --bg-card-hover: rgba(255,255,255,0.06);
+    --border: rgba(255,255,255,0.06);
+    --border-glow: rgba(249,115,22,0.3);
+    --text-primary: #F1F5F9;
+    --text-secondary: #94A3B8;
+    --text-muted: #64748B;
+    --accent-orange: #F97316;
+    --accent-orange-glow: rgba(249,115,22,0.15);
+    --gradient-blue: linear-gradient(135deg, #3B82F6, #6366F1, #8B5CF6);
+    --gradient-hero: linear-gradient(135deg, #1E40AF 0%, #7C3AED 50%, #DB2777 100%);
+    --gradient-green: linear-gradient(135deg, #10B981, #34D399);
+    --gradient-card-shine: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, transparent 50%);
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+    --shadow-md: 0 4px 20px rgba(0,0,0,0.4);
+    --shadow-lg: 0 8px 40px rgba(0,0,0,0.5);
+    --radius-sm: 10px;
+    --radius-md: 16px;
+    --radius-lg: 22px;
+    --radius-xl: 28px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+  }
+
+  /* ===== Sidebar ===== */
+  .sidebar {
+    width: 72px;
+    background: var(--bg-secondary);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+    gap: 6px;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 10;
+  }
+
+  .logo-area {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-sm);
+    background: var(--gradient-blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 15px rgba(99,102,241,0.4);
+    position: relative;
+  }
+  .logo-area::after {
+    content: 'X';
+    font-size: 22px;
+    font-weight: 800;
+    color: white;
+  }
+  /* 彩色X logo模拟 */
+  .logo-x {
+    position: relative;
+    width: 32px;
+    height: 32px;
+  }
+  .logo-x svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .nav-item {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: var(--text-muted);
+    position: relative;
+    font-size: 20px;
+  }
+  .nav-item:hover {
+    background: var(--bg-card-hover);
+    color: var(--text-secondary);
+  }
+  .nav-item.active {
+    background: var(--accent-orange-glow);
+    color: var(--accent-orange);
+    box-shadow: inset 3px 0 0 var(--accent-orange);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    margin-left: -12px;
+    padding-left: 12px;
+    width: 60px;
+  }
+  .nav-item.active:hover {
+    background: rgba(249,115,22,0.2);
+  }
+
+  .nav-divider {
+    width: 32px;
+    height: 1px;
+    background: var(--border);
+    margin: 12px 0;
+  }
+
+  .nav-bottom {
+    margin-top: auto;
+  }
+
+  /* ===== Main Content ===== */
+  .main {
+    flex: 1;
+    overflow-y: auto;
+    padding: 28px 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  /* Header */
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .header-left { display: flex; align-items: baseline; gap: 16px; }
+  .page-title {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+  .greeting {
+    color: var(--text-secondary);
+    font-size: 14px;
+    font-weight: 400;
+  }
+  .greeting span { margin: 0 4px; }
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .avatar-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--gradient-blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 2px solid rgba(255,255,255,0.1);
+    transition: transform 0.2s;
+  }
+  .avatar-btn:hover { transform: scale(1.05); }
+
+  /* Top Cards Row */
+  .top-cards {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr auto;
+    gap: 20px;
+  }
+
+  /* Hero Card */
+  .hero-card {
+    background: var(--gradient-hero);
+    border-radius: var(--radius-lg);
+    padding: 28px 32px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg), 0 0 60px rgba(124,58,237,0.15);
+  }
+  .hero-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -30%;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero-card::after {
+    content: '';
+    position: absolute;
+    bottom: -40%;
+    left: -10%;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(249,115,22,0.12) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.75);
+    margin-bottom: 16px;
+    font-weight: 500;
+  }
+  .hero-eye { opacity: 0.6; cursor: pointer; }
+  .hero-amount-row {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 18px;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-label-text {
+    font-size: 14px;
+    color: rgba(255,255,255,0.8);
+    font-weight: 500;
+  }
+  .hero-amount {
+    font-size: 48px;
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.2);
+  }
+  .hero-amount .currency { font-size: 28px; font-weight: 600; opacity: 0.85; }
+  .hero-compare {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(10px);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .hero-sub-row {
+    display: flex;
+    gap: 28px;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-sub-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .hero-sub-label {
+    font-size: 12px;
+    color: rgba(255,255,255,0.65);
+    font-weight: 500;
+  }
+  .hero-sub-value {
+    font-size: 19px;
+    font-weight: 700;
+  }
+  .hero-sub-value.income { color: #A5F3FC; }
+  .hero-sub-value.expense { color: #FCA5A5; }
+  .hero-sub-value.net { color: white; }
+  .hero-sub-change {
+    font-size: 11px;
+    font-weight: 600;
+    margin-top: 2px;
+  }
+  .hero-sub-change.up { color: #86EFAC; }
+  .hero-sub-change.down { color: #FCA5A5; }
+
+  /* Asset Card */
+  .asset-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 28px 28px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.25s ease;
+  }
+  .asset-card:hover {
+    border-color: rgba(16,185,129,0.3);
+    box-shadow: var(--shadow-md), 0 0 30px rgba(16,185,129,0.06);
+  }
+  .asset-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(16,185,129,0.3), transparent);
+  }
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+  }
+  .card-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary);
+  }
+  .card-icon-btn {
+    cursor: pointer;
+    opacity: 0.5;
+    transition: opacity 0.2s;
+  }
+  .card-icon-btn:hover { opacity: 0.8; }
+  
+  .asset-ring-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .asset-ring {
+    width: 90px;
+    height: 90px;
+    position: relative;
+  }
+  .asset-ring svg {
+    transform: rotate(-90deg);
+  }
+  .asset-ring circle {
+    fill: none;
+    stroke-width: 8;
+  }
+  .asset-ring .ring-bg { stroke: rgba(255,255,255,0.06); }
+  .asset-ring .ring-fg {
+    stroke: url(#greenGradient);
+    stroke-linecap: round;
+    transition: stroke-dashoffset 1s ease;
+  }
+  .asset-info { display: flex; flex-direction: column; gap: 6px; }
+  .asset-main-label { font-size: 13px; color: var(--text-muted); }
+  .asset-main-value {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+  .asset-change {
+    font-size: 12px;
+    font-weight: 600;
+    color: #F87171;
+  }
+  .asset-sub-row {
+    display: flex;
+    gap: 24px;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+  }
+  .asset-sub-item { display: flex; flex-direction: column; gap: 2px; }
+  .asset-sub-label { font-size: 11px; color: var(--text-muted); }
+  .asset-sub-value { font-size: 15px; font-weight: 600; }
+
+  /* Quick Actions */
+  .quick-actions {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 12px;
+    min-width: 160px;
+  }
+  .qa-title {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .qa-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .qa-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 14px 8px;
+    border-radius: var(--radius-md);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+  .qa-btn:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--border-glow);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+  .qa-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+  .qa-icon.orange { background: rgba(249,115,22,0.15); color: var(--accent-orange); }
+  .qa-icon.blue { background: rgba(59,130,246,0.15); color: #60A5FA; }
+  .qa-icon.green { background: rgba(16,185,129,0.15); color: #34D399; }
+  .qa-icon.purple { background: rgba(139,92,246,0.15); color: #A78BFA; }
+  .qa-label { font-size: 11px; color: var(--text-secondary); font-weight: 500; }
+
+  /* Content Grid */
+  .content-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 20px;
+  }
+
+  /* Card Base */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    transition: all 0.25s ease;
+  }
+  .card:hover { border-color: rgba(255,255,255,0.1); }
+  .card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .card-head h3 {
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  /* Chart Area */
+  .chart-container {
+    position: relative;
+    height: 260px;
+  }
+  .chart-svg {
+    width: 100%;
+    height: 100%;
+  }
+  .chart-legend {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+  .legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+  .chart-tooltip {
+    position: absolute;
+    background: rgba(15,23,42,0.95);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 10px 14px;
+    font-size: 12px;
+    pointer-events: none;
+    z-index: 5;
+    box-shadow: var(--shadow-md);
+  }
+  .tt-row { display: flex; justify-content: space-between; gap: 16px; margin-bottom: 3px; }
+  .tt-row:last-child { margin-bottom: 0; }
+  .tt-label { color: var(--text-muted); }
+  .tt-value { font-weight: 600; }
+  .tt-value.inc { color: #A5F3FC; }
+  .tt-value.exp { color: #FCA5A5; }
+  .tt-value.net { color: #C4B5FD; }
+
+  /* Ranking */
+  .ranking-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .rank-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .rank-num {
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .rank-num.top1 { background: rgba(249,115,22,0.2); color: var(--accent-orange); }
+  .rank-num.top2 { background: rgba(148,163,184,0.15); color: #94A3B8; }
+  .rank-num.top3 { background: rgba(217,119,96,0.15); color: #D97757; }
+  .rank-num.normal { background: var(--bg-card); color: var(--text-muted); }
+  .rank-emoji { font-size: 18px; flex-shrink: 0; }
+  .rank-info { flex: 1; min-width: 0; }
+  .rank-name { font-size: 13px; font-weight: 500; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .rank-bar-wrap {
+    height: 6px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .rank-bar {
+    height: 100%;
+    border-radius: 3px;
+    background: linear-gradient(90deg, #8B5CF6, #A78BFA);
+    transition: width 0.6s ease;
+  }
+  .rank-right { text-align: right; flex-shrink: 0; }
+  .rank-pct { font-size: 11px; color: var(--text-muted); }
+  .rank-amt { font-size: 13px; font-weight: 600; }
+
+  /* Bottom Grid */
+  .bottom-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1.1fr;
+    gap: 20px;
+  }
+  .mini-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    transition: all 0.25s ease;
+  }
+  .mini-card:hover { border-color: rgba(255,255,255,0.1); }
+  .mc-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+  .mc-head h4 { font-size: 14px; font-weight: 600; }
+  .mc-link { font-size: 11px; color: var(--accent-orange); cursor: pointer; opacity: 0.8; }
+  .mc-link:hover { opacity: 1; }
+
+  /* Recent Transactions */
+  .tx-list { display: flex; flex-direction: column; gap: 10px; }
+  .tx-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+  }
+  .tx-item:last-child { border-bottom: none; }
+  .tx-date { font-size: 11px; color: var(--text-muted); min-width: 48px; }
+  .tx-emoji { font-size: 16px; }
+  .tx-desc { flex: 1; font-size: 13px; }
+  .tx-cat { font-size: 11px; color: var(--text-muted); }
+  .tx-amount { font-size: 13px; font-weight: 600; }
+  .tx-amount.exp { color: #F87171; }
+  .tx-account { font-size: 11px; color: var(--text-muted); min-width: 40px; text-align: right; }
+
+  /* Budget */
+  .budget-progress {
+    margin-bottom: 12px;
+  }
+  .bp-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+  }
+  .bp-label { font-size: 12px; color: var(--text-secondary); }
+  .bp-amount { font-size: 13px; font-weight: 600; }
+  .bp-bar-bg {
+    height: 8px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .bp-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, #F97316, #FB923C);
+    width: 26%;
+    transition: width 0.8s ease;
+  }
+  .bp-detail {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 6px;
+  }
+
+  /* AI Assistant */
+  .ai-chips {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .ai-chip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-size: 12px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .ai-chip:hover {
+    background: rgba(249,115,22,0.08);
+    border-color: var(--border-glow);
+    color: var(--text-primary);
+  }
+  .ai-chip-tag {
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+  .tag-query { background: rgba(59,130,246,0.15); color: #60A5FA; }
+  .tag-entry { background: rgba(16,185,129,0.15); color: #34D399; }
+  .tag-analysis { background: rgba(139,92,246,0.15); color: #A78BFA; }
+  .tag-chat { background: rgba(249,115,22,0.15); color: #FB923C; }
+
+  /* Input */
+  .ai-input-wrap {
+    position: relative;
+  }
+  .ai-input {
+    width: 100%;
+    padding: 12px 40px 12px 14px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-size: 13px;
+    outline: none;
+    font-family: inherit;
+    transition: border-color 0.2s;
+  }
+  .ai-input:focus { border-color: var(--accent-orange); }
+  .ai-input::placeholder { color: var(--text-muted); }
+  .ai-send {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 16px;
+  }
+  .ai-send:hover { color: var(--accent-orange); }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.15); }
+
+  /* Annotation */
+  .annotation {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(249,115,22,0.1);
+    border: 1px solid rgba(249,115,22,0.25);
+    color: var(--accent-orange);
+    padding: 10px 24px;
+    border-radius: 30px;
+    font-size: 13px;
+    font-weight: 500;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+  }
+</style>
+</head>
+<body>
+
+<!-- SVG Defs -->
+<svg style="width:0;height:0;position:absolute">
+  <defs>
+    <linearGradient id="greenGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#10B981"/>
+      <stop offset="100%" stop-color="#34D399"/>
+    </linearGradient>
+    <linearGradient id="chartFillInc" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="rgba(56,189,248,0.3)"/>
+      <stop offset="100%" stop-color="rgba(56,189,248,0)"/>
+    </linearGradient>
+    <linearGradient id="chartFillExp" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="rgba(248,113,113,0.25)"/>
+      <stop offset="100%" stop-color="rgba(248,113,113,0)"/>
+    </linearGradient>
+    <linearGradient id="chartFillNet" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="rgba(167,139,250,0.3)"/>
+      <stop offset="100%" stop-color="rgba(167,139,250,0)"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+</svg>
+
+<!-- Sidebar -->
+<aside class="sidebar">
+  <div class="logo-area"></div>
+  <div class="nav-item active">✏️</div>
+  <div class="nav-item">🏠</div>
+  <div class="nav-item">📅</div>
+  <div class="nav-item">📋</div>
+  <div class="nav-item">📊</div>
+  <div class="nav-item">🏦</div>
+  <div class="nav-divider"></div>
+  <div class="nav-item">📈</div>
+  <div class="nav-item">⚙️</div>
+  <div class="nav-item">💬</div>
+  <div class="nav-bottom">
+    <div class="nav-item">⚙️</div>
+  </div>
+</aside>
+
+<!-- Main -->
+<main class="main">
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-left">
+      <h1 class="page-title">首页</h1>
+      <p class="greeting"><span>🌙</span> 晚上好，收一收心，安心结束这一天 <span>😴</span></p>
+    </div>
+    <div class="header-right">
+      <div class="avatar-btn">XO</div>
+    </div>
+  </header>
+
+  <!-- Top Cards -->
+  <section class="top-cards">
+    
+    <!-- Hero Card -->
+    <div class="hero-card">
+      <div class="hero-label">
+        本月收支总览
+        <span class="hero-eye">👁</span>
+      </div>
+      <div class="hero-amount-row">
+        <span class="hero-label-text">净收入</span>
+        <div class="hero-amount">
+          <span class="currency">¥</span>2,943.00
+        </div>
+        <div class="hero-compare">↑ 43.0% 比上月 +¥2,219.17</div>
+      </div>
+      <div class="hero-sub-row">
+        <div class="hero-sub-item">
+          <span class="hero-sub-label">收入</span>
+          <span class="hero-sub-value income">¥ 5,289.00</span>
+          <span class="hero-sub-change up">↑ 35.1%</span>
+        </div>
+        <div class="hero-sub-item">
+          <span class="hero-sub-label">支出</span>
+          <span class="hero-sub-value expense">¥ 2,346.00</span>
+          <span class="hero-sub-change down">↓ 21.4%</span>
+        </div>
+        <div class="hero-sub-item">
+          <span class="hero-sub-label">净收入</span>
+          <span class="hero-sub-value net">¥ 2,943.00</span>
+          <span class="hero-sub-change up">↑ 43.0%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Asset Card -->
+    <div class="asset-card">
+      <div class="card-header">
+        <span class="card-title">资产总览</span>
+        <span class="card-icon-btn">👁</span>
+      </div>
+      <div class="asset-ring-container">
+        <div class="asset-ring">
+          <svg viewBox="0 0 36 36">
+            <circle class="ring-bg" cx="18" cy="18" r="15.5"/>
+            <circle class="ring-fg" cx="18" cy="18" r="15.5"
+              stroke-dasharray="73 100"
+              stroke-dashoffset="0"/>
+          </svg>
+        </div>
+        <div class="asset-info">
+          <span class="asset-main-label">净资产</span>
+          <span class="asset-main-value">¥ 30,708.22</span>
+          <span class="asset-change">↑ 10.6% 较上月</span>
+        </div>
+      </div>
+      <div class="asset-sub-row">
+        <div class="asset-sub-item">
+          <span class="asset-sub-label">总资产</span>
+          <span class="asset-sub-value" style="color:#93C5FD;font-size:15px;">¥132,116.22</span>
+        </div>
+        <div class="asset-sub-item">
+          <span class="asset-sub-label">总负债</span>
+          <span class="asset-sub-value" style="color:#FCA5A5;font-size:15px;">¥101,408.00</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="quick-actions">
+      <div class="qa-title">快捷操作</div>
+      <div class="qa-grid">
+        <div class="qa-btn">
+          <div class="qa-icon orange">✏️</div>
+          <span class="qa-label">记一笔</span>
+        </div>
+        <div class="qa-btn">
+          <div class="qa-icon blue">📋</div>
+          <span class="qa-label">看流水</span>
+        </div>
+        <div class="qa-btn">
+          <div class="qa-icon green">📊</div>
+          <span class="qa-label">看报表</span>
+        </div>
+        <div class="qa-btn">
+          <div class="qa-icon purple">🤖</div>
+          <span class="qa-label">问 AI</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Charts & Ranking -->
+  <section class="content-grid">
+    
+    <!-- Chart Card -->
+    <div class="card">
+      <div class="card-head">
+        <h3>本月每日收支趋势</h3>
+      </div>
+      <div class="chart-legend">
+        <div class="legend-item"><span class="legend-dot" style="background:#38BDF8;"></span> 收入</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#F87171;"></span> 支出</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#C4B5FD;"></span> 净收支</div>
+      </div>
+      <div class="chart-container">
+        <svg class="chart-svg" viewBox="0 0 520 240" preserveAspectRatio="none">
+          <!-- Grid lines -->
+          <g stroke="rgba(255,255,255,0.04)" stroke-width="1">
+            <line x1="40" y1="20" x2="510" y2="20"/><line x1="40" y1="65" x2="510" y2="65"/>
+            <line x1="40" y1="110" x2="510" y2="110"/><line x1="40" y1="155" x2="510" y2="155"/>
+            <line x1="40" y1="200" x2="510" y2="200"/>
+          </g>
+          <!-- Y labels -->
+          <g fill="#64748B" font-size="10" font-family="Inter">
+            <text x="35" y="24" text-anchor="end">5,000</text>
+            <text x="35" y="69" text-anchor="end">4,000</text>
+            <text x="35" y="114" text-anchor="end">3,000</text>
+            <text x="35" y="159" text-anchor="end">2,000</text>
+            <text x="35" y="204" text-anchor="end">1,000</text>
+            <text x="35" y="220" text-anchor="end">0</text>
+          </g>
+          <!-- X labels -->
+          <g fill="#64748B" font-size="10" font-family="Inter">
+            <text x="55" y="218" text-anchor="middle">04.01</text>
+            <text x="120" y="218" text-anchor="middle">04.05</text>
+            <text x="190" y="218" text-anchor="middle">04.10</text>
+            <text x="260" y="218" text-anchor="middle">04.15</text>
+            <text x="330" y="218" text-anchor="middle">04.20</text>
+            <text x="400" y="218" text-anchor="middle">04.25</text>
+            <text x="470" y="218" text-anchor="middle">04.30</text>
+          </g>
+          
+          <!-- Expense area fill -->
+          <path d="M55,198 Q80,196 105,195 T155,192 Q180,188 205,175 T260,70 Q280,140 305,170 T360,188 Q390,192 420,195 T480,198 L480,200 L55,200 Z"
+            fill="url(#chartFillExp)" />
+          <!-- Expense line -->
+          <path d="M55,198 Q80,196 105,195 T155,192 Q180,188 205,175 T260,70 Q280,140 305,170 T360,188 Q390,192 420,195 T480,198"
+            fill="none" stroke="#F87171" stroke-width="2" stroke-linecap="round"/>
+          
+          <!-- Income area fill (spike at ~04.12) -->
+          <path d="M55,199 L105,197 L155,195 L205,193 L230,45 Q245,150 260,165 L310,185 L360,190 L420,196 L480,199 L480,200 L55,200 Z"
+            fill="url(#chartFillInc)"/>
+          <!-- Income line -->
+          <path d="M55,199 L105,197 L155,195 L205,193 L230,45 Q245,150 260,165 L310,185 L360,190 L420,196 L480,199"
+            fill="none" stroke="#38BDF8" stroke-width="2" stroke-linecap="round"/>
+
+          <!-- Net line -->
+          <path d="M55,199 L105,198 L155,197 L205,195 L235,65 Q250,145 270,168 L320,186 L370,191 L430,196 L480,198.5"
+            fill="none" stroke="#C4B5FD" stroke-width="2.5" stroke-linecap="round" filter="url(#glow)"/>
+
+          <!-- Active dot -->
+          <circle cx="235" cy="65" r="5" fill="#C4B5FD" filter="url(#glow)"/>
+          <circle cx="235" cy="65" r="3" fill="white"/>
+
+          <!-- Tooltip -->
+          <foreignObject x="245" y="35" width="130" height="85">
+            <div class="chart-tooltip" xmlns="http://www.w3.org/1999/xhtml" style="position:static;">
+              <div style="font-size:10px;color:#64748B;margin-bottom:6px;">04.12</div>
+              <div class="tt-row"><span class="tt-label">收入</span><span class="tt-value inc">4,850.00</span></div>
+              <div class="tt-row"><span class="tt-label">支出</span><span class="tt-value exp">1,230.00</span></div>
+              <div class="tt-row"><span class="tt-label">净收支</span><span class="tt-value net">3,620.00</span></div>
+            </div>
+          </foreignObject>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Ranking Card -->
+    <div class="card">
+      <div class="card-head">
+        <h3>本月支出分类排行</h3>
+        <select style="font-size:12px;background:transparent;border:none;color:var(--text-secondary);cursor:pointer;outline:none;">
+          <option>支出分类</option>
+          <option>收入分类</option>
+        </select>
+      </div>
+      <div class="ranking-list">
+        <div class="rank-item">
+          <div class="rank-num top1">1</div>
+          <div class="rank-emoji">👕</div>
+          <div class="rank-info">
+            <div class="rank-name">衣裤鞋帽</div>
+            <div class="rank-bar-wrap"><div class="rank-bar" style="width:23.49%;"></div></div>
+          </div>
+          <div class="rank-right">
+            <div class="rank-pct">23.49%</div>
+            <div class="rank-amt">551.00</div>
+          </div>
+        </div>
+        <div class="rank-item">
+          <div class="rank-num top2">2</div>
+          <div class="rank-emoji">🍱</div>
+          <div class="rank-info">
+            <div class="rank-name">一日三餐</div>
+            <div class="rank-bar-wrap"><div class="rank-bar" style="width:17.65%;background:linear-gradient(90deg,#7C3AED,#A78BFA);"></div></div>
+          </div>
+          <div class="rank-right">
+            <div class="rank-pct">17.65%</div>
+            <div class="rank-amt">414.00</div>
+          </div>
+        </div>
+        <div class="rank-item">
+          <div class="rank-num top3">3</div>
+          <div class="rank-emoji">🏠</div>
+          <div class="rank-info">
+            <div class="rank-name">家居饰品</div>
+            <div class="rank-bar-wrap"><div class="rank-bar" style="width:11.38%;background:linear-gradient(90deg,#2563EB,#60A5FA);"></div></div>
+          </div>
+          <div class="rank-right">
+            <div class="rank-pct">11.38%</div>
+            <div class="rank-amt">267.00</div>
+          </div>
+        </div>
+        <div class="rank-item">
+          <div class="rank-num normal">4</div>
+          <div class="rank-emoji">🥬</div>
+          <div class="rank-info">
+            <div class="rank-name">餐饮食材</div>
+            <div class="rank-bar-wrap"><div class="rank-bar" style="width:10.36%;background:linear-gradient(90deg,#059669,#34D399);"></div></div>
+          </div>
+          <div class="rank-right">
+            <div class="rank-pct">10.36%</div>
+            <div class="rank-amt">243.00</div>
+          </div>
+        </div>
+        <div class="rank-item">
+          <div class="rank-num normal">5</div>
+          <div class="rank-emoji">🍜</div>
+          <div class="rank-info">
+            <div class="rank-name">外出美食</div>
+            <div class="rank-bar-wrap"><div class="rank-bar" style="width:10.32%;background:linear-gradient(90deg,#DC2626,#F87171);"></div></div>
+          </div>
+          <div class="rank-right">
+            <div class="rank-pct">10.32%</div>
+            <div class="rank-amt">242.00</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bottom Row -->
+  <section class="bottom-grid">
+    
+    <!-- Recent Transactions -->
+    <div class="mini-card">
+      <div class="mc-head">
+        <h4>最近流水</h4>
+        <span class="mc-link">全部流水 ></span>
+      </div>
+      <div class="tx-list">
+        <div class="tx-item">
+          <span class="tx-date">4月14日</span>
+          <span class="tx-emoji">🥬</span>
+          <div class="tx-desc">
+            餐饮食材<span class="tx-cat"> 食品酒水</span>
+          </div>
+          <span class="tx-amount exp">-123.00</span>
+          <span class="tx-account">微信</span>
+        </div>
+        <div class="tx-item">
+          <span class="tx-date">4月14日</span>
+          <span class="tx-emoji">🍱</span>
+          <div class="tx-desc">
+            一日三餐<span class="tx-cat"> 食品酒水</span>
+          </div>
+          <span class="tx-amount exp">-123.00</span>
+          <span class="tx-account">微信</span>
+        </div>
+        <div class="tx-item">
+          <span class="tx-date">4月12日</span>
+          <span class="tx-emoji">💰</span>
+          <div class="tx-desc">
+            工资收入<span class="tx-cat"> 工资薪金</span>
+          </div>
+          <span class="tx-amount" style="color:#86EFAC;">+5,000</span>
+          <span class="tx-account">工行</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Budget -->
+    <div class="mini-card">
+      <div class="mc-head">
+        <h4>预算提醒</h4>
+        <span style="font-size:11px;color:var(--text-muted);">本月预算已设置</span>
+      </div>
+      <div class="budget-progress">
+        <div class="bp-labels">
+          <span class="bp-label">本月预算</span>
+          <span class="bp-amount">￥9,150.00</span>
+        </div>
+        <div class="bp-bar-bg">
+          <div class="bp-bar-fill"></div>
+        </div>
+        <div class="bp-detail">
+          <span>已用 ￥2,346.00</span>
+          <span>剩余 ￥6,804.00</span>
+          <span style="color:#FB923C;">26%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI Assistant -->
+    <div class="mini-card" style="grid-column: span 2;">
+      <div class="mc-head">
+        <h4>🤖 AI 助手</h4>
+        <span class="mc-link">更多 ></span>
+      </div>
+      <div style="display:flex;gap:20px;align-items:flex-end;">
+        <div class="ai-chips" style="flex:1;display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+          <div class="ai-chip"><span class="ai-chip tag-query">查询</span> 本月收入支出汇总数</div>
+          <div class="ai-chip"><span class="ai-chip tag-entry">录入</span> 今天下午3点工行收到工资</div>
+          <div class="ai-chip"><span class="ai-chip tag-analysis">分析</span> 本月支出为什么比上月多</div>
+          <div class="ai-chip"><span class="ai-chip tag-chat">对话</span> 聊聊我的资产配置怎么优化</div>
+        </div>
+        <div class="ai-input-wrap" style="width:280px;">
+          <input class="ai-input" placeholder="向 AI 助手提问..." type="text">
+          <span class="ai-send">⬆</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div class="annotation">✨ XplorOne 重设计概念稿 — 深色玻璃态风格（Dark Glassmorphism）</div>
+
+</body>
+</html>
