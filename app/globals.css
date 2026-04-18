@@ -1,25 +1,46 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f5f7fb;
+  /* 背景与前景 — 温和干净 */
+  --background: #F8FAFC;
   --foreground: #14324f;
   --surface: #ffffff;
-  --surface-soft: #edf3fb;
-  --brand-blue: #2e6bff;
-  --brand-blue-strong: #1d4fd8;
-  --accent-warm: #ff7d3b;
-  --accent-warm-strong: #e96421;
-  --accent-green: #14b88d;
-  --accent-green-strong: #0b8668;
-  --accent-violet: #6c79ff;
-  --accent-violet-strong: #4658da;
+  --surface-soft: #F1F5F9;
+
+  /* 品牌主色 — 从 Logo 右上蓝色区提取 */
+  --brand-primary: #2563EB;
+  --brand-primary-light: #3B82F6;
+  --brand-primary-strong: #1D4ED8;
+  --brand-primary-bg: #EFF6FF;
+
+  /* 辅助色 — 从 Logo 其他色区提取 */
+  --brand-teal: #14B88D;
+  --brand-teal-strong: #0D9375;
+  --brand-warm: #FF7D3B;
+  --brand-warm-strong: #E96421;
+  --brand-green: #34D399;
+
+  /* 渐变 — 取自 Logo 四色过渡 */
+  --gradient-brand: linear-gradient(135deg, #3DD1A0 0%, #1BA8B8 30%, #2563EB 70%, #FF7D3B 100%);
+
+  /* 文字层级 */
   --text-strong: #15324c;
   --text-muted: #4d6480;
   --text-soft: #6f85a1;
-  --line: rgba(21, 50, 76, 0.1);
-  --line-strong: rgba(21, 50, 76, 0.18);
-  --shadow-soft: 0 18px 45px rgba(16, 36, 62, 0.08);
-  --shadow-lift: 0 26px 54px rgba(16, 36, 62, 0.12);
+
+  /* 线条与阴影 — 更柔和 */
+  --line: rgba(21, 50, 76, 0.09);
+  --line-strong: rgba(21, 50, 76, 0.15);
+  --shadow-soft: 0 12px 36px rgba(16, 36, 62, 0.07);
+  --shadow-lift: 0 20px 48px rgba(16, 36, 62, 0.10);
+
+  /* 向后兼容别名（逐步迁移中保留） */
+  --brand-blue: var(--brand-primary);
+  --brand-blue-strong: var(--brand-primary-strong);
+  --accent-warm: var(--brand-warm);
+  --accent-warm-strong: var(--brand-warm-strong);
+  --accent-green: var(--brand-teal);
+  --accent-green-strong: var(--brand-teal-strong);
 }
 
 @theme inline {
@@ -39,10 +60,7 @@ html {
 
 body {
   margin: 0;
-  background:
-    radial-gradient(circle at top left, rgba(46, 107, 255, 0.12), transparent 26%),
-    radial-gradient(circle at top right, rgba(255, 125, 59, 0.14), transparent 24%),
-    linear-gradient(180deg, #f7f9fc 0%, #f3f6fb 34%, #f6f8fb 100%);
+  background: var(--surface-soft);
   color: var(--foreground);
   font-family: var(--font-noto-sans-sc), sans-serif;
 }
@@ -58,6 +76,18 @@ img {
 }
 
 ::selection {
-  background: rgba(46, 107, 255, 0.18);
+  background: rgba(37, 99, 235, 0.16);
   color: var(--text-strong);
+}
+
+/* ===== 滚动进入动画（Step 7 预置） ===== */
+.animate-on-scroll {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.35s ease-out, transform 0.35s ease-out;
+}
+
+.animate-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
 }
