@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useState, useEffect, useCallback } from "react";
 import type { ReactNode } from "react";
 
-import { footerLinks, navItems, siteConfig, type StatusLabel } from "../site-data";
+import { footerLinks, navItems, type StatusLabel } from "../site-data";
 
 /* ===== 状态标签 ===== */
 
@@ -104,8 +104,8 @@ export function SiteHeader() {
     <header
       className={`sticky top-0 z-40 transition-shadow duration-300 ${
         scrolled
-          ? "border-b border-[var(--line)] bg-white/95 shadow-[0_1px_12px_rgba(0,0,0,0.05)] backdrop-blur-xl"
-          : "border-b border-white/70 bg-[rgba(248,250,252,0.92)] backdrop-blur-xl"
+          ? "border-b border-[var(--line)] bg-[#FEFEFD] shadow-[0_1px_12px_rgba(0,0,0,0.05)]"
+          : "border-b border-white/70 bg-[#FEFEFD]"
       }`}
     >
       <Container className="flex h-16 items-center justify-between gap-6 lg:h-18">

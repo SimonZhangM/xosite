@@ -1,7 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import { Container, SectionHeading, SiteShell, StatusPill } from "./components/site-chrome";
+import { Container, SiteShell, StatusPill } from "./components/site-chrome";
+import { PreviewSwitcher } from "./components/preview-switcher";
 import { ScrollAnimator } from "./components/scroll-animate";
 import {
   capabilityCards,
@@ -20,7 +21,7 @@ export default function HomePage() {
       {/* ===== Hero：从 10 层压缩到 5 层 ===== */}
       <section
         id="hero"
-        className="relative overflow-hidden bg-gradient-to-b from-white to-[var(--surface-soft)] py-16 sm:py-20"
+        className="relative overflow-hidden bg-[#FDFCF8] py-16 sm:py-20"
       >
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(37,99,235,0.05),transparent_42%),radial-gradient(circle_at_top_right,rgba(255,125,59,0.03),transparent_38%)]" />
         <Container className="relative grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-end">
@@ -111,13 +112,27 @@ export default function HomePage() {
       </section>
 
       {/* ===== 问题卡（带图标） ===== */}
-      <section className="bg-[var(--surface-soft)] py-16 sm:py-20 animate-on-scroll">
+      <section className="bg-[#FFFFFF] py-16 sm:py-20 animate-on-scroll">
         <Container>
-          <SectionHeading
-            eyebrow="用户问题"
-            title="你真正关心的，不只是记账"
-            description="对超级个体和自由职业者来说，财务焦虑往往来自「感觉模糊」，不是来自少一个按钮。"
-          />
+          <div className="mx-auto max-w-3xl text-center">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-white px-4 py-2 text-sm font-semibold shadow-[var(--shadow-soft)]">
+              <Image
+                src="/thinking-problem.svg"
+                alt=""
+                width={18}
+                height={18}
+                className="h-[18px] w-[18px]"
+                aria-hidden="true"
+              />
+              <span className="text-black">用户问题</span>
+            </div>
+            <h2 className="mt-5 text-balance text-3xl font-semibold tracking-tight text-[var(--text-strong)] sm:text-4xl">
+              你真正关心的，不只是记账
+            </h2>
+            <p className="mt-4 text-lg leading-8 text-[var(--text-muted)]">
+              对超级个体和自由职业者来说，财务焦虑往往来自「感觉模糊」，不是来自少一个按钮。
+            </p>
+          </div>
           <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
             {problemCards.map((item) => (
               <article
@@ -125,10 +140,17 @@ export default function HomePage() {
                 className="group relative overflow-hidden rounded-2xl border border-[var(--line)] bg-white p-6 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[var(--shadow-lift)] hover:border-[var(--line-strong)]"
               >
                 <div
-                  className="flex h-12 w-12 items-center justify-center rounded-2xl text-2xl transition-transform duration-300 group-hover:scale-110"
+                  className="flex h-12 w-12 items-center justify-center rounded-2xl transition-transform duration-300 group-hover:scale-110"
                   style={{ backgroundColor: item.iconBg }}
                 >
-                  {item.icon}
+                  <Image
+                    src={item.iconSrc ?? "/reports.svg"}
+                    alt=""
+                    width={24}
+                    height={24}
+                    className="h-6 w-6"
+                    aria-hidden="true"
+                  />
                 </div>
                 <p className="mt-5 text-base font-semibold leading-8 text-[var(--text-strong)]">{item.text}</p>
                 <p className="mt-3 text-sm leading-7 text-[var(--text-muted)]">{item.description}</p>
@@ -139,13 +161,27 @@ export default function HomePage() {
       </section>
 
       {/* ===== 对比表格 ===== */}
-      <section className="py-16 sm:py-20 animate-on-scroll">
+      <section className="bg-[#FDFCF8] py-16 sm:py-20 animate-on-scroll">
         <Container>
-          <SectionHeading
-            eyebrow="产品判断"
-            title="为什么它不是又一个记账 App"
-            description="XplorOne 不主打企业财务系统，也不走全能 AI 平台路线。它更像是给轻经营者准备的一张财务工作台。"
-          />
+          <div className="mx-auto max-w-3xl text-center">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-white px-4 py-2 text-sm font-semibold shadow-[var(--shadow-soft)]">
+              <Image
+                src="/find.svg"
+                alt=""
+                width={18}
+                height={18}
+                className="h-[18px] w-[18px]"
+                aria-hidden="true"
+              />
+              <span className="text-black">产品定位</span>
+            </div>
+            <h2 className="mt-5 text-balance text-3xl font-semibold tracking-tight text-[var(--text-strong)] sm:text-4xl">
+              它不是又一个记账 App，而是一套财务工作台
+            </h2>
+            <p className="mt-4 text-lg leading-8 text-[var(--text-muted)]">
+              XplorOne 不主打企业财务系统，也不走全能 AI 平台路线。它更适合超级个体与自由职业者，用来理清财务结构、看懂资金状态。
+            </p>
+          </div>
           <div className="mt-10 overflow-hidden rounded-2xl border border-[var(--line)] bg-white shadow-[var(--shadow-soft)] transition-shadow duration-300 hover:shadow-[var(--shadow-lift)]">
             <div className="overflow-x-auto">
               <table className="min-w-full text-left">
@@ -174,14 +210,28 @@ export default function HomePage() {
       </section>
 
       {/* ===== 能力卡（带图标 + 左边框区分） ===== */}
-      <section id="capabilities" className="bg-[var(--surface-soft)] py-16 sm:py-20 animate-on-scroll">
+      <section id="capabilities" className="bg-[#FFFFFF] py-16 sm:py-20 animate-on-scroll">
         <Container>
-          <SectionHeading
-            eyebrow="核心能力"
-            title="先把财务结构理清，再谈更高效的查询与联动"
-            description="AI 在这里不是主角，它只是帮助你更快找到结构、趋势和页面上下文。真正先成立的，是账本、预算、图表和可理解的工作流。"
-          />
-          <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-5">
+          <div className="mx-auto max-w-3xl text-center">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-white px-4 py-2 text-sm font-semibold shadow-[var(--shadow-soft)]">
+              <Image
+                src="/flashlamp.svg"
+                alt=""
+                width={18}
+                height={18}
+                className="h-[18px] w-[18px]"
+                aria-hidden="true"
+              />
+              <span className="text-black">核心能力</span>
+            </div>
+            <h2 className="mt-5 text-balance text-3xl font-semibold tracking-tight text-[var(--text-strong)] sm:text-4xl">
+              先把财务结构理清，再把查询、联动和开放能力接起来
+            </h2>
+            <p className="mt-4 text-lg leading-8 text-[var(--text-muted)]">
+              账本、账户、分类、预算和图表，先把财务结构搭起来；查询、联动与开放接口，再让这套结构真正流动起来。
+            </p>
+          </div>
+          <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
             {capabilityCards.map((card, index) => (
               <article
                 key={card.title}
@@ -200,7 +250,6 @@ export default function HomePage() {
                     <span className="text-xl">{card.icon}</span>
                     <h3 className="text-base font-semibold text-[var(--text-strong)]">{card.title}</h3>
                   </div>
-                  {index === 3 ? <StatusPill status="已支持" compact /> : null}
                 </div>
                 <p className="mt-4 text-sm font-medium leading-7 text-[var(--text-strong)]">
                   {card.description}
@@ -213,100 +262,116 @@ export default function HomePage() {
       </section>
 
       {/* ===== 截图预览 ===== */}
-      <section id="previews" className="py-16 sm:py-20 animate-on-scroll">
+      <section id="previews" className="bg-[#FDFCF8] py-16 sm:py-20 animate-on-scroll">
         <Container>
-          <SectionHeading
-            eyebrow="界面预览"
-            title="用真实截图说话，而不是概念插画"
-            description="首版展示真正代表产品结构的 5 个业务页面。聊天页不会抢 Hero，也不会替代产品本体。"
-          />
-          <div className="mt-10 grid gap-6 lg:grid-cols-2">
-            {galleryItems.map((item) => (
+          <div className="mx-auto max-w-3xl text-center">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-white px-4 py-2 text-sm font-semibold shadow-[var(--shadow-soft)]">
+              <Image
+                src="/page.svg"
+                alt=""
+                width={18}
+                height={18}
+                className="h-[18px] w-[18px]"
+                aria-hidden="true"
+              />
+              <span className="text-black">界面预览</span>
+            </div>
+            <h2 className="mt-5 text-balance text-3xl font-semibold tracking-tight text-[var(--text-strong)] sm:text-4xl">
+              真实页面，比概念图更能说明这是什么产品
+            </h2>
+            <p className="mt-4 text-lg leading-8 text-[var(--text-muted)]">
+              你看到的不是一组好看的示意图，而是 XplorOne 正在使用的核心页面。看一眼，会比很多介绍都更清楚。
+            </p>
+          </div>
+          <div className="mt-10">
+            <PreviewSwitcher items={galleryItems} />
+          </div>
+        </Container>
+      </section>
+
+      {/* ===== 信任边界 ===== */}
+      <section className="bg-[#FFFFFF] py-16 sm:py-20 animate-on-scroll">
+        <Container>
+          <div className="mx-auto max-w-3xl text-center">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-white px-4 py-2 text-sm font-semibold shadow-[var(--shadow-soft)]">
+              <Image
+                src="/protection.svg"
+                alt=""
+                width={18}
+                height={18}
+                className="h-[18px] w-[18px]"
+                aria-hidden="true"
+              />
+              <span className="text-black">信任边界</span>
+            </div>
+            <h2 className="mt-5 text-balance text-3xl font-semibold tracking-tight text-[var(--text-strong)] sm:text-4xl">
+              把数据留在自己手里，安心才更具体
+            </h2>
+            <p className="mt-4 text-lg leading-8 text-[var(--text-muted)]">
+              从账本保存到归档迁移，从分析边界到密钥保护，XplorOne 更在意的不只是功能能不能做，也在意哪些该做、哪些不该越界。
+            </p>
+          </div>
+
+          <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+            {[
+              {
+                icon: "💾",
+                title: "本地账本",
+                description: "核心账本默认保存在本地。就算断网，你也照样能看账、管账，心里更有底。",
+              },
+              {
+                icon: "🔒",
+                title: "只读分析",
+                description: "AI 可以帮你读账、看趋势、做分析，但不会直接改动你的账本数据。该看的能看，不该碰的就不碰。",
+              },
+              {
+                icon: "📦",
+                title: "归档迁移",
+                description: "支持 .xpl 归档备份与迁移。换设备也好，自己留存也好，数据都能跟着你走。",
+              },
+              {
+                icon: "🛡️",
+                title: "密钥保护",
+                description: "模型密钥会由系统侧统一保护和管理，不需要你反复操心，配置边界也更清楚。",
+              },
+            ].map((item) => (
               <article
                 key={item.title}
-                className="group overflow-hidden rounded-2xl border border-[var(--line)] bg-white shadow-[var(--shadow-soft)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[var(--shadow-lift)]"
+                className="group rounded-2xl border border-[var(--line)] bg-[#F8FAFD] p-6 shadow-[var(--shadow-soft)] transition-all duration-300 hover:-translate-y-1 hover:bg-white hover:shadow-[var(--shadow-lift)]"
               >
-                <div className="relative aspect-[16/10] overflow-hidden bg-[var(--surface-soft)]">
-                  <Image
-                    src={item.src}
-                    alt={item.alt}
-                    fill
-                    className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]"
-                    sizes="(min-width: 1024px) 48vw, 100%"
-                  />
-                </div>
-                <div className="space-y-2 p-5">
-                  <h3 className="text-lg font-semibold text-[var(--text-strong)]">{item.title}</h3>
-                  <p className="text-sm leading-7 text-[var(--text-muted)]">{item.description}</p>
-                </div>
+                <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-2xl shadow-[0_8px_20px_rgba(15,23,42,0.06)]">
+                  {item.icon}
+                </span>
+                <h3 className="mt-5 text-lg font-semibold text-[var(--text-strong)]">{item.title}</h3>
+                <p className="mt-3 text-sm leading-7 text-[var(--text-muted)]">{item.description}</p>
               </article>
             ))}
           </div>
         </Container>
       </section>
 
-      {/* ===== 本地优先 + AI 联动（精简版） ===== */}
-      <section className="bg-[var(--surface-soft)] py-16 sm:py-20 animate-on-scroll">
-        <Container className="grid gap-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:items-start">
-          <div className="rounded-2xl border border-[var(--line)] bg-white p-7 shadow-[var(--shadow-soft)]">
-            <SectionHeading
-              eyebrow="本地优先"
-              title="数据留在你的电脑上，这比任何承诺都更让人放心"
-              description=""
-            />
-            <div className="mt-8 space-y-4">
-              {[
-                { icon: "💾", text: "核心数据默认保存在本地，断网也能查账" },
-                { icon: "🔒", iconColor: "var(--brand-teal)", text: "AI 可以读取账本分析，但不能改写任何数据" },
-                { icon: "📦", iconColor: "var(--brand-warm)", text: ".xpl 归档格式随时备份迁移，数据永远属于你" },
-                { icon: "🛡️", iconColor: "var(--brand-primary)", text: "模型密钥经系统级加密保护" },
-              ].map((item) => (
-                <div
-                  key={item.text}
-                  className="group flex items-start gap-4 rounded-2xl border border-[var(--line)] bg-[var(--surface-soft)] p-4 transition-all duration-200 hover:bg-white hover:shadow-[var(--shadow-soft)]"
-                >
-                  <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white text-base shadow-sm">{item.icon}</span>
-                  <p className="text-sm leading-7 text-[var(--text-strong)]">{item.text}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="space-y-5">
-            <div className="rounded-2xl border border-[rgba(37,99,235,0.14)] bg-[linear-gradient(180deg,rgba(37,99,235,0.06),rgba(255,255,255,0.98))] p-6 shadow-[var(--shadow-soft)]">
-              <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[var(--brand-primary-strong)]">
-                AI 与联动
-              </p>
-              <h3 className="mt-3 text-2xl font-semibold tracking-tight text-[var(--text-strong)]">
-                AI 帮你查、帮你看、帮你联动
-              </h3>
-              <p className="mt-3 text-sm leading-7 text-[var(--text-muted)]">
-                不只是聊天——AI 能直接查询你的真实账本数据、分析结构趋势，再把你带到正确的操作页面。
-              </p>
-              <div className="mt-5 overflow-hidden rounded-2xl border border-white/90 bg-white shadow-[var(--shadow-soft)]">
-                <div className="relative aspect-[16/10]">
-                  <Image
-                    src="/screenshots/xoplorone-chat-page.png"
-                    alt="XplorOne AI 查询与联动界面"
-                    fill
-                    className="object-cover object-top"
-                    sizes="(min-width: 1024px) 44vw, 100%"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </Container>
-      </section>
-
       {/* ===== 使用场景（带图标） ===== */}
-      <section className="bg-[var(--surface-soft)] py-16 sm:py-20 animate-on-scroll">
+      <section className="bg-[#FDFCF8] py-16 sm:py-20 animate-on-scroll">
         <Container>
-          <SectionHeading
-            eyebrow="使用场景"
-            title="不是企业大系统，是一套轻经营者也愿意打开的工作台"
-            description=""
-          />
+          <div className="mx-auto max-w-3xl text-center">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-white px-4 py-2 text-sm font-semibold shadow-[var(--shadow-soft)]">
+              <Image
+                src="/workbench.svg"
+                alt=""
+                width={18}
+                height={18}
+                className="h-[18px] w-[18px]"
+                aria-hidden="true"
+              />
+              <span className="text-black">适合谁用</span>
+            </div>
+            <h2 className="mt-5 text-balance text-3xl font-semibold tracking-tight text-[var(--text-strong)] sm:text-4xl">
+              给超级个体和自由职业者的财务工作台
+            </h2>
+            <p className="mt-4 text-lg leading-8 text-[var(--text-muted)]">
+              不必先学会计，也不必先上重系统。只要你每天都在和收入、支出、账户和预算打交道，XplorOne 就更适合这样的工作方式。
+            </p>
+          </div>
           <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
             {scenarioCards.map((item) => (
               <article
@@ -323,14 +388,25 @@ export default function HomePage() {
       </section>
 
       {/* ===== FAQ ===== */}
-      <section className="pb-20 pt-16 sm:pb-24 sm:pt-20 animate-on-scroll">
+      <section className="bg-[#FFFFFF] pb-20 pt-16 sm:pb-24 sm:pt-20 animate-on-scroll">
         <Container>
           <div className="rounded-[2rem] border border-[var(--line)] bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(241,245,249,0.94))] p-7 shadow-[var(--shadow-soft)] sm:p-9">
-            <SectionHeading
-              eyebrow="FAQ 与下一步"
-              title="先把关键问题说清楚，再决定什么时候开始下载体验"
-              description="首版 FAQ 保持口径谨慎，特别是在本地优先与外部 AI 边界上，不做过满承诺。"
-            />
+            <div className="mx-auto max-w-3xl text-center">
+              <div className="inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-white px-4 py-2 text-sm font-semibold shadow-[var(--shadow-soft)]">
+                <Image
+                  src="/thinking-problem.svg"
+                  alt=""
+                  width={18}
+                  height={18}
+                  className="h-[18px] w-[18px]"
+                  aria-hidden="true"
+                />
+                <span className="text-black">常见问题</span>
+              </div>
+              <h2 className="mt-5 text-balance text-3xl font-semibold tracking-tight text-[var(--text-strong)] sm:text-4xl">
+                开始使用之前，你可能最想先知道这些
+              </h2>
+            </div>
             <div className="mt-8 grid gap-4 md:grid-cols-2">
               {faqItems.slice(0, 4).map((item) => (
                 <article key={item.question} className="rounded-2xl border border-[var(--line)] bg-white p-5 transition-all duration-200 hover:shadow-[var(--shadow-soft)]">

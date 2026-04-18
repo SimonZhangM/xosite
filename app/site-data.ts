@@ -27,46 +27,45 @@ export const problemCards = [
   {
     text: "我这个月到底是赚了，还是只是忙了？",
     description: "收入不少但存款没变——需要把收支、利润和现金流分开看。",
-    icon: "📊",
     iconBg: "#EFF6FF",
   },
   {
     text: "我手上的钱安全吗，还能撑多久？",
     description: "不是吓自己，而是需要一个真实的 runway 判断依据。",
-    icon: "🛡️",
-    iconBg: "#F0FDF9",
+    iconSrc: "/strongbox.svg",
+    iconBg: "#FEF0E6",
   },
   {
-    text: "哪些支出正在慢慢拖累自己？",
+    text: "有哪些不起眼的开销，正在悄悄消耗我们的积蓄？",
     description: "订阅服务、隐性开销——它们不会出现在任何一张大额账单上。",
-    icon: "🔍",
-    iconBg: "#FFF7ED",
+    iconSrc: "/expenses-one.svg",
+    iconBg: "#F0FDF4",
   },
   {
     text: "账户、预算和分类是不是已经乱了？",
     description: "随着业务变复杂，当初随手建的分类体系可能早已名存实亡。",
-    icon: "📋",
-    iconBg: "#F0FDF4",
+    iconSrc: "/financial_report.svg",
+    iconBg: "#F5F3FF",
   },
 ];
 
 export const compareRows = [
   {
     dimension: "核心目标",
-    app: "记流水",
+    app: "记流水、看消费",
     finance: "做规范财务",
-    xplorone: "看懂个人经营与资金状态",
+    xplorone: "看懂资金状态与经营脉络",
   },
   {
-    dimension: "用户门槛",
+    dimension: "上手门槛",
     app: "低",
     finance: "高",
     xplorone: "中低",
   },
   {
-    dimension: "数据方式",
+    dimension: "数据与部署方式",
     app: "多偏云端",
-    finance: "系统化但更重",
+    finance: "系统化部署，更偏重流程",
     xplorone: "本地优先",
   },
   {
@@ -76,13 +75,13 @@ export const compareRows = [
     xplorone: "经营视角 + 资金状态",
   },
   {
-    dimension: "AI 角色",
+    dimension: "AI 的位置",
     app: "弱或表面化",
     finance: "较少涉及",
-    xplorone: "查询、分析、联动",
+    xplorone: "用于查询、分析与联动",
   },
   {
-    dimension: "适合谁",
+    dimension: "更适合谁",
     app: "普通个人",
     finance: "企业财务",
     xplorone: "超级个体与自由职业者",
@@ -93,38 +92,44 @@ export const capabilityCards = [
   {
     title: "多账本与账户结构",
     description: "不是一堆流水，而是可管理的财务空间。",
-    detail: "把不同账户、项目与账本拆开整理，先建立边界，再开始理解资金状态。",
+    detail: "把不同账户、项目与账本拆开整理，先建立边界，再开始理解自己的资金状态。",
     icon: "📁",
   },
   {
-    title: "分类、预算与秩序建立",
+    title: "分类、预算与秩序",
     description: "把收支慢慢理顺，让钱有结构。",
-    detail: "分类和预算不是额外负担，而是帮助你看清哪些支出正在拉扯经营安全感。",
+    detail: "分类和预算不是额外负担，而是帮助你看清哪些支出正在拉扯安全感，哪些地方需要提前设边界。",
     icon: "🎯",
   },
   {
     title: "专业图表与经营视角",
     description: "看趋势、结构和风险，而不只是看总数。",
-    detail: "从月度趋势、收支结构和资产变化里，看懂账户状态与预算执行。",
+    detail: "从月度变化、收支结构和资产状态里，慢慢看懂账户变化、预算执行和经营节奏。",
     icon: "📈",
   },
   {
     title: "AI 查询与分析",
     description: "结合真实数据做查询、汇总与分析。",
-    detail: "AI 是工作台的一部分，不只是聊天窗口，而是帮助你更快找到关键财务信息。",
+    detail: "AI 不是独立漂在外面的聊天窗口，而是工作台的一部分，帮你更快找到关键财务信息。",
     icon: "🤖",
   },
   {
     title: "跨页面联动",
     description: "不是只回答你，还能把你带到对应页面和筛选结果。",
-    detail: "从问题出发，回到真实页面与数据上下文，减少来回切换和重复筛选。",
+    detail: "从问题出发，回到真实页面和数据上下文，减少来回切换，也减少重复筛选。",
     icon: "🔗",
+  },
+  {
+    title: "开放接口与 Agent 能力",
+    description: "不只是在本地记账，也能接入自动化与外部工具。",
+    detail: "通过本地 API 与只读 MCP，XplorOne 可以把真实账本数据连接到工作流、Agent 和其他工具里，同时保留更清楚的边界。",
+    icon: "🧩",
   },
 ];
 
 export const galleryItems = [
   {
-    title: "首页 Dashboard",
+    title: "首页",
     description: "快速看清本月收支与资产状态。",
     src: "/screenshots/xoplorone-workbench.png",
     alt: "XplorOne 首页总览截图",
@@ -158,22 +163,22 @@ export const galleryItems = [
 export const scenarioCards = [
   {
     title: "超级个体",
-    description: "不只是记账，而是建立自己的财务秩序。",
+    description: "不只是记账，而是把收入、支出和账户慢慢理顺，让自己的财务更有秩序。",
     icon: "👤",
   },
   {
     title: "自由职业者",
-    description: "按时间、项目、账户看清收入和支出。",
+    description: "按时间、项目和账户看清每一笔进出。忙的时候，也能知道钱到底去了哪里。",
     icon: "💼",
   },
   {
     title: "小型工作室主理人",
-    description: "不做重型系统，也能先把经营脉络理清。",
+    description: "不必一开始就上重系统，也能先把日常收支、预算和经营脉络整理清楚。",
     icon: "🏠",
   },
   {
     title: "隐私敏感用户",
-    description: "把数据留在本地，把主动权留在自己手里。",
+    description: "把核心账本留在本地，把主动权尽量留在自己手里。用起来更安心，也更踏实。",
     icon: "🔐",
   },
 ];
@@ -242,6 +247,13 @@ export const footerLinks = {
 };
 
 export const websiteUpdates = [
+  {
+    date: "2026-04-18",
+    title: "首页结构升级到 0.1.3",
+    summary:
+      "重写首页信息层级，新增界面预览切换器、图标资源与更新后的产品截图，并同步整理 README、当前状态和建站进度文档。",
+    status: "已支持" as StatusLabel,
+  },
   {
     date: "2026-04-17",
     title: "首版官网上线",
