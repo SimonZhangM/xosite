@@ -25,6 +25,7 @@
 *.pem
 .playwright-cli/
 .workbuddy/
+.codex/
 generated-images/
 
 # debug
