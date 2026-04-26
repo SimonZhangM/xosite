@@ -5,13 +5,17 @@ export const siteConfig = {
   siteName: "xosite",
   title: "超级个体与自由职业者的本地优先财务工作台",
   altTitle: "帮超级个体与自由职业者看懂钱的财务工作台",
+  heroTitle: "把个人经营的财务，放回你自己的电脑里",
+  heroSubtitle:
+    "XplorOne 用本地账本、预算、图表和只读 AI，把零散流水整理成可判断的经营结构。",
+  heroBadges: ["Local-first", "Read-only AI", "Budget / Cashflow / Assets"],
   description:
     "XplorOne 是一套帮助超级个体和自由职业者看懂资金状态、经营节奏与真实收支的本地财务工作台。",
   version: "v0.2.6",
   status: "即将开放" as StatusLabel,
   githubUrl: "",
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
-  contactEmail: "",
+  contactEmail: "simonzhang2026@163.com",
   wechatQrSrc: "",
 };
 
@@ -49,81 +53,117 @@ export const problemCards = [
   },
 ];
 
-export const compareRows = [
+export const trustBoundaries = [
   {
-    dimension: "核心目标",
-    app: "记流水、看消费",
-    finance: "做规范财务",
-    xplorone: "看懂资金状态与经营脉络",
+    title: "本地账本",
+    description: "核心账本默认保存在本地。断网也能看账、管账，数据主权更清楚。",
+    icon: "database",
   },
   {
-    dimension: "上手门槛",
-    app: "低",
-    finance: "高",
-    xplorone: "中低",
+    title: "只读分析",
+    description: "AI 可以帮你读账、看趋势、做分析，但不会直接改动账本数据。",
+    icon: "lock",
   },
   {
-    dimension: "数据与部署方式",
-    app: "多偏云端",
-    finance: "系统化部署，更偏重流程",
-    xplorone: "本地优先",
+    title: "归档迁移",
+    description: "支持 .xpl 归档备份与迁移。换设备、留存、迁移都有明确出口。",
+    icon: "archive",
   },
   {
-    dimension: "财务视角",
-    app: "消费记录",
-    finance: "会计口径",
-    xplorone: "经营视角 + 资金状态",
-  },
-  {
-    dimension: "AI 的位置",
-    app: "弱或表面化",
-    finance: "较少涉及",
-    xplorone: "用于查询、分析与联动",
-  },
-  {
-    dimension: "更适合谁",
-    app: "普通个人",
-    finance: "企业财务",
-    xplorone: "超级个体与自由职业者",
+    title: "密钥保护",
+    description: "模型密钥由系统侧统一保护和管理，减少重复暴露与配置混乱。",
+    icon: "shield",
   },
 ];
 
-export const capabilityCards = [
+export const compareRows = [
   {
-    title: "多账本与账户结构",
-    description: "不是一堆流水，而是可管理的财务空间。",
-    detail: "把不同账户、项目与账本拆开整理，先建立边界，再开始理解自己的资金状态。",
-    icon: "📁",
+    dimension: "普通记账 App",
+    value: "记录流水、看消费分类",
+    xplorone: "看懂资金状态与经营脉络",
   },
   {
-    title: "分类、预算与秩序",
-    description: "把收支慢慢理顺，让钱有结构。",
-    detail: "分类和预算不是额外负担，而是帮助你看清哪些支出正在拉扯安全感，哪些地方需要提前设边界。",
-    icon: "🎯",
+    dimension: "传统财务软件",
+    value: "做规范财务，流程更重",
+    xplorone: "保留结构感，但降低上手门槛",
   },
   {
-    title: "专业图表与经营视角",
-    description: "看趋势、结构和风险，而不只是看总数。",
-    detail: "从月度变化、收支结构和资产状态里，慢慢看懂账户变化、预算执行和经营节奏。",
-    icon: "📈",
+    dimension: "全能 AI 工具",
+    value: "回答问题，但常脱离真实页面",
+    xplorone: "让查询回到本地账本和筛选上下文",
   },
   {
-    title: "AI 查询与分析",
-    description: "结合真实数据做查询、汇总与分析。",
-    detail: "AI 不是独立漂在外面的聊天窗口，而是工作台的一部分，帮你更快找到关键财务信息。",
-    icon: "🤖",
+    dimension: "云端优先工具",
+    value: "依赖在线服务和远端账号",
+    xplorone: "核心账本留在自己的电脑里",
+  },
+];
+
+export const capabilityGroups = [
+  {
+    eyebrow: "Finance Structure",
+    title: "先把账本、账户和预算搭起来",
+    description: "用结构承接日常流水，让收支、资产、预算和分类不再各说各话。",
+    items: [
+      {
+        title: "多账本与账户结构",
+        description: "把不同账户、项目与账本拆开整理，先建立边界，再理解资金状态。",
+        icon: "wallet",
+        iconColor: "#e95556",
+      },
+      {
+        title: "分类、预算与秩序",
+        description: "预算不是额外负担，而是提前给支出设边界，减少事后补救。",
+        icon: "target",
+        iconColor: "#eb7a3b",
+      },
+      {
+        title: "专业图表与经营视角",
+        description: "从趋势、结构和风险里看账户变化、预算执行和经营节奏。",
+        icon: "chart",
+        iconColor: "#f0a43a",
+      },
+    ],
   },
   {
-    title: "跨页面联动",
-    description: "不是只回答你，还能把你带到对应页面和筛选结果。",
-    detail: "从问题出发，回到真实页面和数据上下文，减少来回切换，也减少重复筛选。",
-    icon: "🔗",
+    eyebrow: "AI & Open Access",
+    title: "再让查询、页面和外部工具接起来",
+    description: "AI 不漂在外面，而是回到真实账本、页面筛选和只读接口上。",
+    items: [
+      {
+        title: "AI 查询与分析",
+        description: "结合真实数据做查询、汇总与分析，更快找到关键财务信息。",
+        icon: "bot",
+        iconColor: "#7b5ae5",
+      },
+      {
+        title: "跨页面联动",
+        description: "从问题回到对应页面和筛选结果，减少来回切换与重复筛选。",
+        icon: "link",
+        iconColor: "#5f86e7",
+      },
+      {
+        title: "开放接口与 Agent 能力",
+        description: "通过本地 API 与只读 MCP 连接工作流、Agent 和其他工具。",
+        icon: "plug",
+        iconColor: "#61b2dc",
+      },
+    ],
+  },
+];
+
+export const aiFlowSteps = [
+  {
+    title: "提出财务问题",
+    description: "例如“本月支出为什么比上月多”或“哪些预算快超了”。",
   },
   {
-    title: "开放接口与 Agent 能力",
-    description: "不只是在本地记账，也能接入自动化与外部工具。",
-    detail: "通过本地 API 与只读 MCP，XplorOne 可以把真实账本数据连接到工作流、Agent 和其他工具里，同时保留更清楚的边界。",
-    icon: "🧩",
+    title: "读取本地结构",
+    description: "AI 在明确边界内读取账本、分类、预算和图表上下文。",
+  },
+  {
+    title: "回到真实页面",
+    description: "答案不止是一段文字，还能落到筛选结果、报表和对应页面。",
   },
 ];
 
@@ -133,53 +173,35 @@ export const galleryItems = [
     description: "快速看清本月收支与资产状态。",
     src: "/screenshots/xoplorone-workbench.png",
     alt: "XplorOne 首页总览截图",
+    highlights: ["本月收支、资产和快捷操作集中在一页", "预算提醒、最近流水和 AI 助手并列出现", "适合作为每天打开的财务驾驶舱"],
   },
   {
     title: "日历页",
     description: "把财务活动放回时间维度。",
     src: "/screenshots/xoplorone-calendar-page.png",
     alt: "XplorOne 日历页截图",
+    highlights: ["按日期回看财务活动", "让支出节奏和收入节奏更直观", "适合复盘一个月中钱的流动"],
   },
   {
     title: "流水页",
     description: "从列表里看到更清楚的收支结构。",
     src: "/screenshots/xoplorone-cashflow-page.png",
     alt: "XplorOne 流水页截图",
-  },
-  {
-    title: "预算页",
-    description: "提前建立支出边界，而不是事后补救。",
-    src: "/screenshots/xoplorone-budget-page.png",
-    alt: "XplorOne 预算页截图",
+    highlights: ["用列表承接每一笔真实进出", "筛选、分类和账户信息更容易追踪", "从流水回到结构化判断"],
   },
   {
     title: "报表页",
     description: "从图表中看到经营节奏与月度趋势。",
     src: "/screenshots/xoplorone-income-expense-page.png",
     alt: "XplorOne 报表页截图",
-  },
-];
-
-export const scenarioCards = [
-  {
-    title: "超级个体",
-    description: "不只是记账，而是把收入、支出和账户慢慢理顺，让自己的财务更有秩序。",
-    icon: "👤",
+    highlights: ["从图表看趋势和结构", "区分收入、支出和经营节奏", "用于月度复盘和风险判断"],
   },
   {
-    title: "自由职业者",
-    description: "按时间、项目和账户看清每一笔进出。忙的时候，也能知道钱到底去了哪里。",
-    icon: "💼",
-  },
-  {
-    title: "小型工作室主理人",
-    description: "不必一开始就上重系统，也能先把日常收支、预算和经营脉络整理清楚。",
-    icon: "🏠",
-  },
-  {
-    title: "隐私敏感用户",
-    description: "把核心账本留在本地，把主动权尽量留在自己手里。用起来更安心，也更踏实。",
-    icon: "🔐",
+    title: "预算页",
+    description: "提前建立支出边界，而不是事后补救。",
+    src: "/screenshots/xoplorone-budget-page.png",
+    alt: "XplorOne 预算页截图",
+    highlights: ["提前看到预算执行进度", "把支出边界放在事前", "适合控制订阅、项目和日常开销"],
   },
 ];
 
@@ -241,8 +263,8 @@ export const footerLinks = {
   ],
   connect: [
     { href: "#github", label: "GitHub", external: true, placeholder: true },
-    { href: "#contact", label: "联系我们", placeholder: true },
-    { href: "#wechat", label: "公众号", placeholder: true, qrPlaceholder: true },
+    { href: "mailto:simonzhang2026@163.com", label: "联系作者：simonzhang2026@163.com" },
+    { href: "#feedback", label: "反馈建议", placeholder: true, feedbackPopover: true },
   ],
 };
 

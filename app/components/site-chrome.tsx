@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useSyncExternalStore } from "react";
 import type { ReactNode } from "react";
 
 import { footerLinks, navItems, type StatusLabel } from "../site-data";
@@ -69,7 +69,7 @@ export function SectionHeading({
         align === "center" ? "mx-auto text-center" : "text-left"
       }`}
     >
-      <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[var(--brand-primary-strong)]">
+      <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[var(--brand-warm)]">
         {eyebrow}
       </p>
       <h2 className="mt-3 text-balance text-3xl font-semibold tracking-tight text-[var(--text-strong)] sm:text-4xl">
@@ -130,7 +130,7 @@ export function SiteHeader() {
             <Link
               key={item.href}
               href={item.href}
-              className="relative px-3 py-2 text-sm font-medium text-[var(--text-muted)] transition-colors duration-200 hover:text-[var(--brand-primary-strong)] after:absolute after:bottom-0 after:left-3 after:right-3 after:h-0.5 after:scale-x-0 after:bg-[var(--brand-primary)] after:transition-transform after:duration-200 hover:after:scale-x-100"
+              className="relative px-3 py-2 text-sm font-medium text-[var(--text-muted)] transition-colors duration-200 hover:text-[var(--brand-warm-strong)] after:absolute after:bottom-0 after:left-3 after:right-3 after:h-0.5 after:scale-x-0 after:bg-[var(--brand-warm)] after:transition-transform after:duration-200 hover:after:scale-x-100"
             >
               {item.label}
             </Link>
@@ -184,7 +184,7 @@ export function SiteHeader() {
               key={item.href}
               href={item.href}
               onClick={closeMobile}
-              className="block rounded-lg px-4 py-2.5 text-base font-medium text-[var(--text-muted)] transition-colors hover:bg-[var(--surface-soft)] hover:text-[var(--brand-primary-strong)]"
+              className="block rounded-lg px-4 py-2.5 text-base font-medium text-[var(--text-muted)] transition-colors hover:bg-[var(--surface-soft)] hover:text-[var(--brand-warm-strong)]"
             >
               {item.label}
             </Link>
@@ -199,6 +199,225 @@ export function SiteHeader() {
         </Container>
       </div>
     </header>
+  );
+}
+
+/* ===== Footer preferences ===== */
+
+type LanguageOption = {
+  code: "zh-CN" | "en-US";
+  short: "CN" | "EN";
+  region: "CN" | "US";
+  label: string;
+};
+
+type AppearanceMode = "dark" | "light" | "system";
+
+const languageOptions: LanguageOption[] = [
+  { code: "zh-CN", short: "CN", region: "CN", label: "简体中文" },
+  { code: "en-US", short: "EN", region: "US", label: "English" },
+];
+
+const appearanceOptions: { value: AppearanceMode; label: string }[] = [
+  { value: "dark", label: "深色" },
+  { value: "light", label: "浅色" },
+  { value: "system", label: "跟随浏览器" },
+];
+
+const preferenceEventName = "xosite-preference-change";
+
+function subscribePreference(callback: () => void) {
+  window.addEventListener("storage", callback);
+  window.addEventListener(preferenceEventName, callback);
+
+  return () => {
+    window.removeEventListener("storage", callback);
+    window.removeEventListener(preferenceEventName, callback);
+  };
+}
+
+function emitPreferenceChange() {
+  window.dispatchEvent(new Event(preferenceEventName));
+}
+
+function getStoredLanguageCode() {
+  return window.localStorage.getItem("xosite-language") ?? "zh-CN";
+}
+
+function getServerLanguageCode() {
+  return "zh-CN";
+}
+
+function getStoredAppearance() {
+  const savedAppearance = window.localStorage.getItem("xosite-appearance") as AppearanceMode | null;
+  return savedAppearance && appearanceOptions.some((item) => item.value === savedAppearance)
+    ? savedAppearance
+    : "system";
+}
+
+function getServerAppearance() {
+  return "system" as AppearanceMode;
+}
+
+function GlobeIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="8.5" />
+      <path d="M3.5 12h17" />
+      <path d="M12 3.5c2.2 2.1 3.3 4.9 3.3 8.5s-1.1 6.4-3.3 8.5" />
+      <path d="M12 3.5C9.8 5.6 8.7 8.4 8.7 12s1.1 6.4 3.3 8.5" />
+    </svg>
+  );
+}
+
+function CheckIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="m6.5 12.5 3.3 3.2 7.7-8.2" />
+    </svg>
+  );
+}
+
+function FooterPreferences() {
+  const [languageOpen, setLanguageOpen] = useState(false);
+  const languageCode = useSyncExternalStore(
+    subscribePreference,
+    getStoredLanguageCode,
+    getServerLanguageCode,
+  );
+  const appearance = useSyncExternalStore(
+    subscribePreference,
+    getStoredAppearance,
+    getServerAppearance,
+  );
+  const language = languageOptions.find((item) => item.code === languageCode) ?? languageOptions[0];
+
+  useEffect(() => {
+    document.documentElement.lang = language.code;
+  }, [language]);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    const media = window.matchMedia("(prefers-color-scheme: dark)");
+
+    const applyTheme = () => {
+      const resolved = appearance === "system" ? (media.matches ? "dark" : "light") : appearance;
+      root.dataset.appearance = appearance;
+      root.dataset.resolvedTheme = resolved;
+    };
+
+    applyTheme();
+    media.addEventListener("change", applyTheme);
+
+    return () => media.removeEventListener("change", applyTheme);
+  }, [appearance]);
+
+  const chooseLanguage = (option: LanguageOption) => {
+    window.localStorage.setItem("xosite-language", option.code);
+    emitPreferenceChange();
+    setLanguageOpen(false);
+  };
+
+  return (
+    <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+      <div className="relative">
+        {languageOpen && (
+          <div className="absolute bottom-[calc(100%+0.65rem)] left-0 w-52 overflow-hidden rounded-2xl border border-[var(--line)] bg-white shadow-[0_18px_46px_rgba(15,23,42,0.16)]">
+            {languageOptions.map((option) => {
+              const isActive = option.code === language.code;
+
+              return (
+                <button
+                  key={option.code}
+                  type="button"
+                  onClick={() => chooseLanguage(option)}
+                  className={`flex w-full items-center justify-between gap-4 px-5 py-4 text-left text-sm transition-colors ${
+                    isActive ? "bg-[rgba(239,127,45,0.08)] text-[var(--brand-warm-strong)]" : "text-[var(--text-strong)] hover:bg-[var(--surface-soft)]"
+                  }`}
+                >
+                  <span className="flex items-center gap-3">
+                    <span className="font-semibold tracking-[0.08em]">{option.region}</span>
+                    <span className="text-base">{option.label}</span>
+                  </span>
+                  {isActive && (
+                    <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[var(--brand-warm)] text-white">
+                      <CheckIcon className="h-3.5 w-3.5" />
+                    </span>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        )}
+        <button
+          type="button"
+          onClick={() => setLanguageOpen((value) => !value)}
+          className={`inline-flex h-11 items-center gap-2 rounded-xl border bg-white px-4 text-sm font-semibold text-[var(--text-strong)] shadow-[0_8px_22px_rgba(15,23,42,0.06)] transition-colors ${
+            languageOpen ? "border-[rgba(239,127,45,0.34)]" : "border-[var(--line)] hover:border-[var(--line-strong)]"
+          }`}
+          aria-expanded={languageOpen}
+          aria-label="选择语言"
+        >
+          <GlobeIcon className="h-4.5 w-4.5 text-[var(--text-soft)]" />
+          {language.short}
+          <span className={`text-[var(--text-soft)] transition-transform ${languageOpen ? "rotate-180" : ""}`}>⌄</span>
+        </button>
+      </div>
+
+      <div className="inline-flex h-11 items-center gap-1 rounded-xl border border-[var(--line)] bg-white p-1 shadow-[0_8px_22px_rgba(15,23,42,0.06)]">
+        {appearanceOptions.map((option) => {
+          const isActive = option.value === appearance;
+
+          return (
+            <button
+              key={option.value}
+              type="button"
+              onClick={() => {
+                window.localStorage.setItem("xosite-appearance", option.value);
+                emitPreferenceChange();
+              }}
+              className={`h-9 rounded-lg px-3 text-sm font-semibold transition-colors ${
+                isActive
+                  ? "bg-white text-[var(--text-strong)] shadow-[0_6px_16px_rgba(15,23,42,0.10)] ring-1 ring-[var(--line)]"
+                  : "text-[var(--text-muted)] hover:text-[var(--text-strong)]"
+              }`}
+            >
+              {option.label}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function FeedbackPopover() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div className="relative inline-block">
+      {open && (
+        <div className="absolute bottom-[calc(100%+0.65rem)] left-0 z-10 flex w-72 items-center gap-4 rounded-2xl border border-[var(--line)] bg-white p-4 shadow-[0_18px_46px_rgba(15,23,42,0.16)]">
+          <div className="flex h-24 w-24 shrink-0 flex-col items-center justify-center rounded-xl border border-dashed border-[var(--line-strong)] bg-[var(--surface-soft)] text-xs text-[var(--text-soft)]">
+            <svg xmlns="http://www.w3.org/2000/svg" className="mb-1 h-8 w-8 opacity-30" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+            </svg>
+            反馈
+          </div>
+          <p className="text-xs leading-6 text-[var(--text-soft)]">
+            反馈入口整理中<br />欢迎提交产品建议
+          </p>
+        </div>
+      )}
+      <button
+        type="button"
+        onClick={() => setOpen((value) => !value)}
+        className="text-sm text-[var(--text-muted)] transition-colors duration-150 relative inline-block after:content-[''] after:absolute after:-bottom-0.5 after:left-0 after:w-0 after:h-px after:bg-[var(--brand-warm)] after:transition-all hover:text-[var(--text-strong)] hover:after:w-full"
+        aria-expanded={open}
+      >
+        反馈建议
+      </button>
+    </div>
   );
 }
 
@@ -220,18 +439,6 @@ export function SiteFooter() {
           <p className="max-w-md text-sm leading-7 text-[var(--text-muted)]">
             本地优先的桌面财务工作台，帮超级个体与自由职业者看懂资金与经营。
           </p>
-          {/* 公众号二维码占位 */}
-          <div className="mt-4 flex items-start gap-3">
-            <div className="flex h-24 w-24 shrink-0 flex-col items-center justify-center rounded-xl border border-dashed border-[var(--line-strong)] bg-[var(--surface-soft)] text-xs text-[var(--text-soft)]">
-              <svg xmlns="http://www.w3.org/2000/svg" className="mb-1 h-8 w-8 opacity-30" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-              </svg>
-              公众号
-            </div>
-            <p className="pt-3 text-xs leading-6 text-[var(--text-soft)]">
-              扫码关注公众号<br />获取产品更新动态
-            </p>
-          </div>
         </div>
 
         {/* 第二列：产品 */}
@@ -242,7 +449,7 @@ export function SiteFooter() {
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className="text-sm text-[var(--text-muted)] transition-colors duration-150 relative inline-block after:content-[''] after:absolute after:-bottom-0.5 after:left-0 after:w-0 after:h-px after:bg-[var(--brand-primary)] after:transition-all hover:text-[var(--text-strong)] hover:after:w-full"
+                  className="text-sm text-[var(--text-muted)] transition-colors duration-150 relative inline-block after:content-[''] after:absolute after:-bottom-0.5 after:left-0 after:w-0 after:h-px after:bg-[var(--brand-warm)] after:transition-all hover:text-[var(--text-strong)] hover:after:w-full"
                 >
                   {item.label}
                 </Link>
@@ -257,14 +464,16 @@ export function SiteFooter() {
           <ul className="space-y-2.5">
             {footerLinks.connect.map((item) => (
               <li key={item.label}>
-                {item.placeholder ? (
+                {"feedbackPopover" in item && item.feedbackPopover ? (
+                  <FeedbackPopover />
+                ) : item.placeholder ? (
                   <span className="text-sm text-[var(--text-soft)] cursor-default">
-                    {item.label}{item.qrPlaceholder ? "" : "（即将开放）"}
+                    {item.label}（即将开放）
                   </span>
                 ) : (
                   <Link
                     href={item.href}
-                    className="text-sm text-[var(--text-muted)] transition-colors duration-150 relative inline-block after:content-[''] after:absolute after:-bottom-0.5 after:left-0 after:w-0 after:h-px after:bg-[var(--brand-primary)] after:transition-all hover:text-[var(--text-strong)] hover:after:w-full"
+                    className="text-sm text-[var(--text-muted)] transition-colors duration-150 relative inline-block after:content-[''] after:absolute after:-bottom-0.5 after:left-0 after:w-0 after:h-px after:bg-[var(--brand-warm)] after:transition-all hover:text-[var(--text-strong)] hover:after:w-full"
                   >
                     {item.label}
                   </Link>
@@ -276,12 +485,15 @@ export function SiteFooter() {
       </Container>
 
       {/* 底栏 */}
-      <Container className="flex flex-col gap-2 border-t border-[var(--line)] pt-5 text-xs text-[var(--text-soft)] sm:flex-row sm:items-center sm:justify-between">
-        <p>© 2026 XplorOne. 保留所有权利。</p>
-        <div className="flex gap-4">
-          <span className="cursor-default hover:text-[var(--text-muted)] transition-colors">隐私政策</span>
-          <span className="cursor-default hover:text-[var(--text-muted)] transition-colors">用户协议</span>
+      <Container className="flex flex-col gap-5 border-t border-[var(--line)] py-6 text-xs text-[var(--text-soft)] lg:flex-row lg:items-center lg:justify-between">
+        <div className="space-y-2">
+          <p>© 2026 XplorOne. 保留所有权利。</p>
+          <div className="flex gap-4">
+            <span className="cursor-default hover:text-[var(--text-muted)] transition-colors">隐私政策</span>
+            <span className="cursor-default hover:text-[var(--text-muted)] transition-colors">用户协议</span>
+          </div>
         </div>
+        <FooterPreferences />
       </Container>
     </footer>
   );

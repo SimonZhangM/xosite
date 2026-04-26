@@ -8,6 +8,7 @@ type PreviewItem = {
   description: string;
   src: string;
   alt: string;
+  highlights: string[];
 };
 
 export function PreviewSwitcher({ items }: { items: PreviewItem[] }) {
@@ -15,9 +16,9 @@ export function PreviewSwitcher({ items }: { items: PreviewItem[] }) {
 
   return (
     <div className="mx-auto max-w-6xl">
-      <div className="relative pt-10 sm:pt-12">
-        <div className="absolute inset-x-0 top-5 z-10 flex justify-center px-4">
-          <div className="inline-flex max-w-full gap-2 overflow-x-auto rounded-full border border-[var(--line)] bg-white/95 p-2 shadow-[0_20px_44px_rgba(21,50,76,0.12)] backdrop-blur">
+      <div className="grid items-start gap-5 lg:grid-cols-[15rem_minmax(0,1fr)]">
+        <aside className="h-fit rounded-2xl border border-[var(--line)] bg-white p-3 shadow-[var(--shadow-soft)]">
+          <div className="grid gap-2">
             {items.map((item, index) => {
               const isActive = index === activeIndex;
 
@@ -28,23 +29,25 @@ export function PreviewSwitcher({ items }: { items: PreviewItem[] }) {
                   onClick={() => {
                     startTransition(() => setActiveIndex(index));
                   }}
-                  className={`whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition-all duration-200 ${
+                  className={`rounded-xl px-3 py-3 text-left transition-all duration-200 ${
                     isActive
-                      ? "bg-[var(--text-strong)] text-white shadow-[0_10px_24px_rgba(21,50,76,0.12)]"
+                      ? "bg-[var(--text-strong)] text-white shadow-[0_12px_28px_rgba(21,50,76,0.16)]"
                       : "text-[var(--text-muted)] hover:bg-[var(--surface-soft)] hover:text-[var(--text-strong)]"
                   }`}
                   aria-pressed={isActive}
                 >
-                  {item.title}
+                  <span className="block text-sm font-semibold">{item.title}</span>
+                  <span className={`mt-1 block text-xs leading-5 ${isActive ? "text-white/70" : "text-[var(--text-soft)]"}`}>
+                    {item.description}
+                  </span>
                 </button>
               );
             })}
           </div>
-        </div>
+        </aside>
 
-        <div className="mx-auto max-w-[64rem] pt-12 sm:pt-14">
-          <div className="relative aspect-[1799/1305] shadow-[0_24px_60px_rgba(15,23,42,0.10),0_8px_24px_rgba(15,23,42,0.06)]">
-            <div className="relative isolate h-full w-full overflow-hidden rounded-[6px] [clip-path:inset(0_round_6px)]">
+        <div className="mx-auto w-full max-w-[calc((100vh-9rem)*1799/1305)] min-w-0 rounded-2xl border border-[var(--line)] bg-white p-2 shadow-[0_24px_70px_rgba(15,23,42,0.12)] lg:justify-self-center">
+          <div className="relative aspect-[1799/1305] overflow-hidden rounded-xl bg-white">
               {items.map((item, index) => {
                 const isActive = index === activeIndex;
 
@@ -54,15 +57,24 @@ export function PreviewSwitcher({ items }: { items: PreviewItem[] }) {
                     src={item.src}
                     alt={item.alt}
                     fill
-                    className={`scale-[1.004] object-cover object-top transition-opacity duration-300 ${
+                    className={`scale-[1.006] object-cover object-top transition-opacity duration-300 ${
                       isActive ? "opacity-100" : "pointer-events-none opacity-0"
                     }`}
-                    sizes="(min-width: 1280px) 1120px, (min-width: 768px) 90vw, 100vw"
+                    sizes="(min-width: 1280px) 820px, (min-width: 1024px) 64vw, 100vw"
                     priority={index === 0}
                   />
                 );
               })}
-            </div>
+          </div>
+          <div className="grid gap-2 px-2 py-4 sm:grid-cols-3">
+            {items[activeIndex]?.highlights.map((highlight) => (
+              <div
+                key={highlight}
+                className="flex min-h-14 items-center justify-center rounded-xl border border-[var(--line)] bg-[var(--surface-soft)] px-4 py-3 text-center text-sm font-medium leading-6 text-[var(--text-strong)]"
+              >
+                {highlight}
+              </div>
+            ))}
           </div>
         </div>
       </div>

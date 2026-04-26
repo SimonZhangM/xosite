@@ -2,26 +2,26 @@
 
 :root {
   /* 背景与前景 — 温和干净 */
-  --background: #F8FAFC;
+  --background: #f7faff;
   --foreground: #14324f;
   --surface: #ffffff;
-  --surface-soft: #F1F5F9;
+  --surface-soft: #f7faff;
 
   /* 品牌主色 — 从 Logo 右上蓝色区提取 */
-  --brand-primary: #2563EB;
-  --brand-primary-light: #3B82F6;
-  --brand-primary-strong: #1D4ED8;
-  --brand-primary-bg: #EFF6FF;
+  --brand-primary: #14324f;
+  --brand-primary-light: #284a70;
+  --brand-primary-strong: #0e2740;
+  --brand-primary-bg: #f7faff;
 
   /* 辅助色 — 从 Logo 其他色区提取 */
   --brand-teal: #14B88D;
   --brand-teal-strong: #0D9375;
-  --brand-warm: #FF7D3B;
-  --brand-warm-strong: #E96421;
+  --brand-warm: #ef7f2d;
+  --brand-warm-strong: #d96b1f;
   --brand-green: #34D399;
 
   /* 渐变 — 取自 Logo 四色过渡 */
-  --gradient-brand: linear-gradient(135deg, #3DD1A0 0%, #1BA8B8 30%, #2563EB 70%, #FF7D3B 100%);
+  --gradient-brand: linear-gradient(135deg, #3DD1A0 0%, #1BA8B8 30%, #2563EB 70%, #ef7f2d 100%);
 
   /* 文字层级 */
   --text-strong: #15324c;
@@ -41,6 +41,20 @@
   --accent-warm-strong: var(--brand-warm-strong);
   --accent-green: var(--brand-teal);
   --accent-green-strong: var(--brand-teal-strong);
+}
+
+html[data-resolved-theme="dark"] {
+  --background: #0d2238;
+  --foreground: #f7faff;
+  --surface: #10263d;
+  --surface-soft: #0b1b2d;
+  --text-strong: #f7faff;
+  --text-muted: #bdd0e4;
+  --text-soft: #8ea6bf;
+  --line: rgba(247, 250, 255, 0.12);
+  --line-strong: rgba(247, 250, 255, 0.20);
+  --shadow-soft: 0 14px 36px rgba(0, 0, 0, 0.24);
+  --shadow-lift: 0 24px 60px rgba(0, 0, 0, 0.34);
 }
 
 @theme inline {
@@ -65,6 +79,26 @@ body {
   font-family: var(--font-noto-sans-sc), sans-serif;
 }
 
+html[data-resolved-theme="dark"] .bg-white,
+html[data-resolved-theme="dark"] .bg-white\/90,
+html[data-resolved-theme="dark"] .bg-\[\#FEFEFD\] {
+  background-color: var(--surface) !important;
+}
+
+html[data-resolved-theme="dark"] .bg-\[\#f7faff\],
+html[data-resolved-theme="dark"] .bg-\[var\(--surface-soft\)\] {
+  background-color: var(--surface-soft) !important;
+}
+
+html[data-resolved-theme="dark"] .text-\[var\(--text-strong\)\],
+html[data-resolved-theme="dark"] .text-\[\#15324c\] {
+  color: var(--text-strong) !important;
+}
+
+html[data-resolved-theme="dark"] img {
+  color-scheme: light;
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -76,7 +110,7 @@ img {
 }
 
 ::selection {
-  background: rgba(37, 99, 235, 0.16);
+  background: rgba(239, 127, 45, 0.18);
   color: var(--text-strong);
 }
 

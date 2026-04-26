@@ -1,9 +1,9 @@
 import { Container, SectionHeading, SiteShell, StatusPill } from "../components/site-chrome";
-import { productUpdates, websiteUpdates } from "../site-data";
+import { productUpdates } from "../site-data";
 
 export const metadata = {
   title: "更新日志 | XplorOne",
-  description: "查看 XplorOne 官网更新和产品更新，了解当前发布进度与功能状态。",
+  description: "查看 XplorOne 软件发展进展，了解当前发布进度与功能状态。",
 };
 
 function Timeline({
@@ -43,20 +43,15 @@ export default function ChangelogPage() {
       <section className="pb-20 pt-14 sm:pb-24 sm:pt-18">
         <Container>
           <SectionHeading
-            eyebrow="更新日志"
-            title="官网更新和产品更新，从第一天开始分开记录"
-            description="用户来到 changelog 时，应该一眼分清“这是官网改了”还是“这是产品状态变了”。首版就按两条时间线分开维护。"
+            eyebrow="Release Progress"
+            title="软件发展进展"
+            description="记录产品能力基线、版本状态与下载发布进度。"
             align="center"
           />
 
-          <div className="mt-12 grid gap-6 xl:grid-cols-2">
+          <div className="mx-auto mt-12 max-w-4xl">
             <Timeline
-              title="官网更新"
-              description="记录站点结构、页面、视觉和发布流程层面的变化。"
-              items={websiteUpdates}
-            />
-            <Timeline
-              title="产品更新"
+              title="软件发展进展"
               description="记录产品能力基线、版本状态与下载发布进度。"
               items={productUpdates}
             />
