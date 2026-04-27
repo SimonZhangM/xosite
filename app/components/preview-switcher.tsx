@@ -8,10 +8,10 @@ type PreviewItem = {
   description: string;
   src: string;
   alt: string;
-  highlights: string[];
+  highlights: readonly string[];
 };
 
-export function PreviewSwitcher({ items }: { items: PreviewItem[] }) {
+export function PreviewSwitcher({ items }: { items: readonly PreviewItem[] }) {
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (

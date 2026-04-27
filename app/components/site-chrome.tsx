@@ -5,7 +5,16 @@ import Link from "next/link";
 import { useState, useEffect, useCallback, useSyncExternalStore } from "react";
 import type { ReactNode } from "react";
 
-import { footerLinks, navItems, type StatusLabel } from "../site-data";
+import {
+  emitPreferenceChange,
+  LanguageProvider,
+  languageOptions,
+  preferenceEventName,
+  setStoredLanguage,
+  useLanguage,
+} from "../i18n";
+import { commonCopy } from "../site-copy";
+import type { StatusLabel } from "../site-data";
 
 /* ===== 状态标签 ===== */
 
@@ -23,13 +32,15 @@ export function StatusPill({
   status: StatusLabel;
   compact?: boolean;
 }) {
+  const { statusText } = useLanguage();
+
   return (
     <span
       className={`inline-flex items-center rounded-full font-medium tracking-[0.02em] ${
         compact ? "px-2.5 py-1 text-[0.72rem]" : "px-3 py-1.5 text-sm"
       } ${statusStyles[status]}`}
     >
-      {status}
+      {statusText(status)}
     </span>
   );
 }
@@ -85,6 +96,8 @@ export function SectionHeading({
 export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { locale } = useLanguage();
+  const copy = commonCopy[locale];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -126,7 +139,7 @@ export function SiteHeader() {
 
         {/* 中：导航链接 — 桌面端可见 */}
         <nav className="hidden items-center gap-1 md:flex">
-          {navItems.map((item) => (
+          {copy.navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
@@ -144,14 +157,14 @@ export function SiteHeader() {
             href="/download"
             className="hidden inline-flex items-center rounded-full bg-[var(--brand-warm)] px-4 py-2 text-sm font-semibold text-white shadow-[0_10px_28px_rgba(255,125,59,0.25)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[var(--brand-warm-strong)] hover:shadow-[0_14px_34px_rgba(255,125,59,0.32)] sm:inline-flex"
           >
-            Windows 版即将开放
+            {copy.headerCta}
           </Link>
 
           {/* 移动端汉堡按钮 */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             className="flex h-9 w-9 flex-col items-center justify-center gap-1.5 rounded-lg md:hidden transition-colors hover:bg-[var(--surface-soft)]"
-            aria-label={mobileOpen ? "关闭菜单" : "打开菜单"}
+            aria-label={mobileOpen ? copy.mobileMenuClose : copy.mobileMenuOpen}
           >
             <span
               className={`block h-0.5 w-4.5 bg-[var(--text-strong)] transition-all duration-200 ${
@@ -179,7 +192,7 @@ export function SiteHeader() {
         }`}
       >
         <Container className="py-4 space-y-1">
-          {navItems.map((item) => (
+          {copy.navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
@@ -194,7 +207,7 @@ export function SiteHeader() {
             onClick={closeMobile}
             className="mt-2 block w-full rounded-full bg-[var(--brand-warm)] px-5 py-2.5 text-center text-sm font-semibold text-white shadow-[0_10px_28px_rgba(255,125,59,0.25)]"
           >
-            Windows 版即将开放
+            {copy.headerCta}
           </Link>
         </Container>
       </div>
@@ -204,27 +217,7 @@ export function SiteHeader() {
 
 /* ===== Footer preferences ===== */
 
-type LanguageOption = {
-  code: "zh-CN" | "en-US";
-  short: "CN" | "EN";
-  region: "CN" | "US";
-  label: string;
-};
-
 type AppearanceMode = "dark" | "light" | "system";
-
-const languageOptions: LanguageOption[] = [
-  { code: "zh-CN", short: "CN", region: "CN", label: "简体中文" },
-  { code: "en-US", short: "EN", region: "US", label: "English" },
-];
-
-const appearanceOptions: { value: AppearanceMode; label: string }[] = [
-  { value: "dark", label: "深色" },
-  { value: "light", label: "浅色" },
-  { value: "system", label: "跟随浏览器" },
-];
-
-const preferenceEventName = "xosite-preference-change";
 
 function subscribePreference(callback: () => void) {
   window.addEventListener("storage", callback);
@@ -236,21 +229,9 @@ function subscribePreference(callback: () => void) {
   };
 }
 
-function emitPreferenceChange() {
-  window.dispatchEvent(new Event(preferenceEventName));
-}
-
-function getStoredLanguageCode() {
-  return window.localStorage.getItem("xosite-language") ?? "zh-CN";
-}
-
-function getServerLanguageCode() {
-  return "zh-CN";
-}
-
 function getStoredAppearance() {
   const savedAppearance = window.localStorage.getItem("xosite-appearance") as AppearanceMode | null;
-  return savedAppearance && appearanceOptions.some((item) => item.value === savedAppearance)
+  return savedAppearance && ["dark", "light", "system"].includes(savedAppearance)
     ? savedAppearance
     : "system";
 }
@@ -280,21 +261,13 @@ function CheckIcon({ className = "" }: { className?: string }) {
 
 function FooterPreferences() {
   const [languageOpen, setLanguageOpen] = useState(false);
-  const languageCode = useSyncExternalStore(
-    subscribePreference,
-    getStoredLanguageCode,
-    getServerLanguageCode,
-  );
+  const { locale, language } = useLanguage();
+  const copy = commonCopy[locale];
   const appearance = useSyncExternalStore(
     subscribePreference,
     getStoredAppearance,
     getServerAppearance,
   );
-  const language = languageOptions.find((item) => item.code === languageCode) ?? languageOptions[0];
-
-  useEffect(() => {
-    document.documentElement.lang = language.code;
-  }, [language]);
 
   useEffect(() => {
     const root = document.documentElement;
@@ -312,9 +285,8 @@ function FooterPreferences() {
     return () => media.removeEventListener("change", applyTheme);
   }, [appearance]);
 
-  const chooseLanguage = (option: LanguageOption) => {
-    window.localStorage.setItem("xosite-language", option.code);
-    emitPreferenceChange();
+  const chooseLanguage = (option: (typeof languageOptions)[number]) => {
+    setStoredLanguage(option.code);
     setLanguageOpen(false);
   };
 
@@ -356,7 +328,7 @@ function FooterPreferences() {
             languageOpen ? "border-[rgba(239,127,45,0.34)]" : "border-[var(--line)] hover:border-[var(--line-strong)]"
           }`}
           aria-expanded={languageOpen}
-          aria-label="选择语言"
+          aria-label={copy.languageAria}
         >
           <GlobeIcon className="h-4.5 w-4.5 text-[var(--text-soft)]" />
           {language.short}
@@ -365,7 +337,7 @@ function FooterPreferences() {
       </div>
 
       <div className="inline-flex h-11 items-center gap-1 rounded-xl border border-[var(--line)] bg-white p-1 shadow-[0_8px_22px_rgba(15,23,42,0.06)]">
-        {appearanceOptions.map((option) => {
+        {copy.appearanceOptions.map((option) => {
           const isActive = option.value === appearance;
 
           return (
@@ -393,6 +365,8 @@ function FooterPreferences() {
 
 function FeedbackPopover() {
   const [open, setOpen] = useState(false);
+  const { locale } = useLanguage();
+  const copy = commonCopy[locale].footer;
 
   return (
     <div className="relative inline-block">
@@ -402,11 +376,12 @@ function FeedbackPopover() {
             <svg xmlns="http://www.w3.org/2000/svg" className="mb-1 h-8 w-8 opacity-30" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
             </svg>
-            反馈
+            {copy.feedbackQr}
           </div>
-          <p className="text-xs leading-6 text-[var(--text-soft)]">
-            反馈入口整理中<br />欢迎提交产品建议
-          </p>
+          <p
+            className="text-xs leading-6 text-[var(--text-soft)]"
+            dangerouslySetInnerHTML={{ __html: copy.feedbackText }}
+          />
         </div>
       )}
       <button
@@ -415,7 +390,7 @@ function FeedbackPopover() {
         className="text-sm text-[var(--text-muted)] transition-colors duration-150 relative inline-block after:content-[''] after:absolute after:-bottom-0.5 after:left-0 after:w-0 after:h-px after:bg-[var(--brand-warm)] after:transition-all hover:text-[var(--text-strong)] hover:after:w-full"
         aria-expanded={open}
       >
-        反馈建议
+        {copy.connectLinks.find((item) => "feedbackPopover" in item && item.feedbackPopover)?.label ?? "Feedback"}
       </button>
     </div>
   );
@@ -424,6 +399,9 @@ function FeedbackPopover() {
 /* ===== Footer（三列：品牌 / 产品 / 联系我们） ===== */
 
 export function SiteFooter() {
+  const { locale } = useLanguage();
+  const copy = commonCopy[locale].footer;
+
   return (
     <footer className="border-t border-[var(--line)] bg-white/90">
       <Container className="grid gap-10 py-12 md:grid-cols-[1.4fr_0.8fr_0.8fr]">
@@ -434,18 +412,18 @@ export function SiteFooter() {
             <span className="text-base font-semibold text-[var(--text-strong)]">XplorOne</span>
           </div>
           <h3 className="mt-2 text-xl font-semibold tracking-tight text-[var(--text-strong)]">
-            让财务从模糊感觉，变成清晰结构。
+            {copy.tagline}
           </h3>
           <p className="max-w-md text-sm leading-7 text-[var(--text-muted)]">
-            本地优先的桌面财务工作台，帮超级个体与自由职业者看懂资金与经营。
+            {copy.description}
           </p>
         </div>
 
         {/* 第二列：产品 */}
         <div>
-          <h4 className="mb-4 text-sm font-semibold uppercase tracking-wider text-[var(--text-soft)]">产品</h4>
+          <h4 className="mb-4 text-sm font-semibold uppercase tracking-wider text-[var(--text-soft)]">{copy.productTitle}</h4>
           <ul className="space-y-2.5">
-            {footerLinks.product.map((item) => (
+            {copy.productLinks.map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}
@@ -460,15 +438,15 @@ export function SiteFooter() {
 
         {/* 第三列：联系我们 */}
         <div>
-          <h4 className="mb-4 text-sm font-semibold uppercase tracking-wider text-[var(--text-soft)]">联系我们</h4>
+          <h4 className="mb-4 text-sm font-semibold uppercase tracking-wider text-[var(--text-soft)]">{copy.contactTitle}</h4>
           <ul className="space-y-2.5">
-            {footerLinks.connect.map((item) => (
+            {copy.connectLinks.map((item) => (
               <li key={item.label}>
                 {"feedbackPopover" in item && item.feedbackPopover ? (
                   <FeedbackPopover />
-                ) : item.placeholder ? (
+                ) : "placeholder" in item && item.placeholder ? (
                   <span className="text-sm text-[var(--text-soft)] cursor-default">
-                    {item.label}（即将开放）
+                    {item.label} ({copy.placeholderSuffix})
                   </span>
                 ) : (
                   <Link
@@ -487,10 +465,10 @@ export function SiteFooter() {
       {/* 底栏 */}
       <Container className="flex flex-col gap-5 border-t border-[var(--line)] py-6 text-xs text-[var(--text-soft)] lg:flex-row lg:items-center lg:justify-between">
         <div className="space-y-2">
-          <p>© 2026 XplorOne. 保留所有权利。</p>
+          <p>{copy.copyright}</p>
           <div className="flex gap-4">
-            <span className="cursor-default hover:text-[var(--text-muted)] transition-colors">隐私政策</span>
-            <span className="cursor-default hover:text-[var(--text-muted)] transition-colors">用户协议</span>
+            <span className="cursor-default hover:text-[var(--text-muted)] transition-colors">{copy.privacy}</span>
+            <span className="cursor-default hover:text-[var(--text-muted)] transition-colors">{copy.terms}</span>
           </div>
         </div>
         <FooterPreferences />
@@ -503,10 +481,10 @@ export function SiteFooter() {
 
 export function SiteShell({ children }: { children: ReactNode }) {
   return (
-    <>
+    <LanguageProvider>
       <SiteHeader />
       <main className="flex-1">{children}</main>
       <SiteFooter />
-    </>
+    </LanguageProvider>
   );
 }
