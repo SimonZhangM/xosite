@@ -27,6 +27,7 @@
 .workbuddy/
 .codex/
 generated-images/
+section-*.png
 
 # debug
 npm-debug.log*
