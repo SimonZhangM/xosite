@@ -1,21 +1,8 @@
 import type { Metadata } from "next";
-import { JetBrains_Mono, Noto_Sans_SC } from "next/font/google";
+import Script from "next/script";
 
 import "./globals.css";
 import { siteConfig } from "./site-data";
-
-const notoSans = Noto_Sans_SC({
-  variable: "--font-noto-sans-sc",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  display: "swap",
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-jetbrains-mono",
-  subsets: ["latin"],
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.siteUrl),
@@ -56,8 +43,31 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="zh-CN" className={`${notoSans.variable} ${jetbrainsMono.variable} h-full`}>
-      <body className="min-h-full">{children}</body>
+    <html lang="zh-CN" className="h-full" suppressHydrationWarning>
+      <body className="min-h-full">
+        <Script id="xosite-language-bootstrap" strategy="beforeInteractive">
+          {`(() => {
+            try {
+              const key = "xosite-language";
+              const stored = window.localStorage.getItem(key);
+              if (stored === "zh-CN" || stored === "en-US") {
+                document.documentElement.lang = stored;
+                return;
+              }
+
+              const languages = navigator.languages && navigator.languages.length
+                ? navigator.languages
+                : [navigator.language];
+              const resolved = languages.some((language) => String(language).toLowerCase().startsWith("zh"))
+                ? "zh-CN"
+                : "en-US";
+
+              document.documentElement.lang = resolved;
+            } catch {}
+          })();`}
+        </Script>
+        {children}
+      </body>
     </html>
   );
 }

@@ -60,8 +60,8 @@ html[data-resolved-theme="dark"] {
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-noto-sans-sc);
-  --font-mono: var(--font-jetbrains-mono);
+  --font-sans: "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", "Segoe UI", Arial, sans-serif;
+  --font-mono: "JetBrains Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
 }
 
 * {
@@ -76,7 +76,7 @@ body {
   margin: 0;
   background: var(--surface-soft);
   color: var(--foreground);
-  font-family: var(--font-noto-sans-sc), sans-serif;
+  font-family: "Microsoft YaHei", "PingFang SC", "Hiragino Sans GB", "Segoe UI", Arial, sans-serif;
 }
 
 html[data-resolved-theme="dark"] .bg-white,

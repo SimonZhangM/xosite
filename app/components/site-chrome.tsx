@@ -152,6 +152,8 @@ export function SiteHeader() {
 
         {/* 右：操作区 */}
         <div className="flex items-center gap-3">
+          <LanguageSwitcher className="hidden sm:inline-block" menuPlacement="bottom" />
+
           {/* CTA 按钮 */}
           <Link
             href="/download"
@@ -259,9 +261,75 @@ function CheckIcon({ className = "" }: { className?: string }) {
   );
 }
 
-function FooterPreferences() {
+function LanguageSwitcher({
+  className = "",
+  menuPlacement = "top",
+}: {
+  className?: string;
+  menuPlacement?: "top" | "bottom";
+}) {
   const [languageOpen, setLanguageOpen] = useState(false);
   const { locale, language } = useLanguage();
+  const copy = commonCopy[locale];
+  const menuPosition =
+    menuPlacement === "bottom"
+      ? "absolute right-0 top-[calc(100%+0.65rem)]"
+      : "absolute bottom-[calc(100%+0.65rem)] left-0";
+
+  const chooseLanguage = (option: (typeof languageOptions)[number]) => {
+    setStoredLanguage(option.code);
+    setLanguageOpen(false);
+  };
+
+  return (
+    <div className={`relative ${className}`}>
+      {languageOpen && (
+        <div className={`${menuPosition} z-20 w-52 overflow-hidden rounded-2xl border border-[var(--line)] bg-white shadow-[0_18px_46px_rgba(15,23,42,0.16)]`}>
+          {languageOptions.map((option) => {
+            const isActive = option.code === language.code;
+
+            return (
+              <button
+                key={option.code}
+                type="button"
+                onClick={() => chooseLanguage(option)}
+                className={`flex w-full items-center justify-between gap-4 px-5 py-4 text-left text-sm transition-colors ${
+                  isActive ? "bg-[rgba(239,127,45,0.08)] text-[var(--brand-warm-strong)]" : "text-[var(--text-strong)] hover:bg-[var(--surface-soft)]"
+                }`}
+              >
+                <span className="flex items-center gap-3">
+                  <span className="font-semibold tracking-[0.08em]">{option.region}</span>
+                  <span className="text-base">{option.label}</span>
+                </span>
+                {isActive && (
+                  <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[var(--brand-warm)] text-white">
+                    <CheckIcon className="h-3.5 w-3.5" />
+                  </span>
+                )}
+              </button>
+            );
+          })}
+        </div>
+      )}
+      <button
+        type="button"
+        onClick={() => setLanguageOpen((value) => !value)}
+        className={`inline-flex h-11 items-center gap-2 rounded-xl border bg-white px-4 text-sm font-semibold text-[var(--text-strong)] shadow-[0_8px_22px_rgba(15,23,42,0.06)] transition-colors ${
+          languageOpen ? "border-[rgba(239,127,45,0.34)]" : "border-[var(--line)] hover:border-[var(--line-strong)]"
+        }`}
+        aria-expanded={languageOpen}
+        aria-label={copy.languageAria}
+      >
+        <GlobeIcon className="h-4.5 w-4.5 text-[var(--text-soft)]" />
+        {language.short}
+        <span className={`text-[var(--text-soft)] transition-transform ${languageOpen ? "rotate-180" : ""}`}>⌄</span>
+      </button>
+    </div>
+  );
+}
+
+function FooterPreferences() {
+  const { locale } = useLanguage();
   const copy = commonCopy[locale];
   const appearance = useSyncExternalStore(
     subscribePreference,
@@ -285,57 +353,8 @@ function FooterPreferences() {
     return () => media.removeEventListener("change", applyTheme);
   }, [appearance]);
 
-  const chooseLanguage = (option: (typeof languageOptions)[number]) => {
-    setStoredLanguage(option.code);
-    setLanguageOpen(false);
-  };
-
   return (
     <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-      <div className="relative">
-        {languageOpen && (
-          <div className="absolute bottom-[calc(100%+0.65rem)] left-0 w-52 overflow-hidden rounded-2xl border border-[var(--line)] bg-white shadow-[0_18px_46px_rgba(15,23,42,0.16)]">
-            {languageOptions.map((option) => {
-              const isActive = option.code === language.code;
-
-              return (
-                <button
-                  key={option.code}
-                  type="button"
-                  onClick={() => chooseLanguage(option)}
-                  className={`flex w-full items-center justify-between gap-4 px-5 py-4 text-left text-sm transition-colors ${
-                    isActive ? "bg-[rgba(239,127,45,0.08)] text-[var(--brand-warm-strong)]" : "text-[var(--text-strong)] hover:bg-[var(--surface-soft)]"
-                  }`}
-                >
-                  <span className="flex items-center gap-3">
-                    <span className="font-semibold tracking-[0.08em]">{option.region}</span>
-                    <span className="text-base">{option.label}</span>
-                  </span>
-                  {isActive && (
-                    <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[var(--brand-warm)] text-white">
-                      <CheckIcon className="h-3.5 w-3.5" />
-                    </span>
-                  )}
-                </button>
-              );
-            })}
-          </div>
-        )}
-        <button
-          type="button"
-          onClick={() => setLanguageOpen((value) => !value)}
-          className={`inline-flex h-11 items-center gap-2 rounded-xl border bg-white px-4 text-sm font-semibold text-[var(--text-strong)] shadow-[0_8px_22px_rgba(15,23,42,0.06)] transition-colors ${
-            languageOpen ? "border-[rgba(239,127,45,0.34)]" : "border-[var(--line)] hover:border-[var(--line-strong)]"
-          }`}
-          aria-expanded={languageOpen}
-          aria-label={copy.languageAria}
-        >
-          <GlobeIcon className="h-4.5 w-4.5 text-[var(--text-soft)]" />
-          {language.short}
-          <span className={`text-[var(--text-soft)] transition-transform ${languageOpen ? "rotate-180" : ""}`}>⌄</span>
-        </button>
-      </div>
-
       <div className="inline-flex h-11 items-center gap-1 rounded-xl border border-[var(--line)] bg-white p-1 shadow-[0_8px_22px_rgba(15,23,42,0.06)]">
         {copy.appearanceOptions.map((option) => {
           const isActive = option.value === appearance;
@@ -372,12 +391,13 @@ function FeedbackPopover() {
     <div className="relative inline-block">
       {open && (
         <div className="absolute bottom-[calc(100%+0.65rem)] left-0 z-10 flex w-72 items-center gap-4 rounded-2xl border border-[var(--line)] bg-white p-4 shadow-[0_18px_46px_rgba(15,23,42,0.16)]">
-          <div className="flex h-24 w-24 shrink-0 flex-col items-center justify-center rounded-xl border border-dashed border-[var(--line-strong)] bg-[var(--surface-soft)] text-xs text-[var(--text-soft)]">
-            <svg xmlns="http://www.w3.org/2000/svg" className="mb-1 h-8 w-8 opacity-30" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-            </svg>
-            {copy.feedbackQr}
-          </div>
+          <Image
+            src="/feedback.jpg"
+            alt={copy.feedbackQr}
+            width={96}
+            height={96}
+            className="h-24 w-24 shrink-0 rounded-xl object-contain"
+          />
           <p
             className="text-xs leading-6 text-[var(--text-soft)]"
             dangerouslySetInnerHTML={{ __html: copy.feedbackText }}
@@ -467,8 +487,12 @@ export function SiteFooter() {
         <div className="space-y-2">
           <p>{copy.copyright}</p>
           <div className="flex gap-4">
-            <span className="cursor-default hover:text-[var(--text-muted)] transition-colors">{copy.privacy}</span>
-            <span className="cursor-default hover:text-[var(--text-muted)] transition-colors">{copy.terms}</span>
+            <Link href="/privacy" className="transition-colors hover:text-[var(--text-muted)]">
+              {copy.privacy}
+            </Link>
+            <Link href="/terms" className="transition-colors hover:text-[var(--text-muted)]">
+              {copy.terms}
+            </Link>
           </div>
         </div>
         <FooterPreferences />

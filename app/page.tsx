@@ -21,6 +21,7 @@ import { PreviewSwitcher } from "./components/preview-switcher";
 import { ScrollAnimator } from "./components/scroll-animate";
 import { useLanguage } from "./i18n";
 import { faqPageCopy, homeCopy } from "./site-copy";
+import { downloadLinks } from "./site-data";
 
 const iconMap = {
   archive: ArchiveIcon,
@@ -342,7 +343,7 @@ function HomeContent() {
               </div>
               <div className="flex flex-col gap-3 sm:flex-row">
                 <Link
-                  href="/download"
+                  href={downloadLinks.windows}
                   className="inline-flex min-h-11 items-center justify-center rounded-full bg-[var(--brand-warm)] px-5 text-sm font-semibold text-white transition hover:bg-[var(--brand-warm-strong)]"
                 >
                   {copy.release.downloadCta}
@@ -352,6 +353,12 @@ function HomeContent() {
                   className="inline-flex min-h-11 items-center justify-center rounded-full border border-white/16 bg-white/8 px-5 text-sm font-semibold text-white transition hover:bg-white/12"
                 >
                   {copy.release.changelogCta}
+                </Link>
+                <Link
+                  href={downloadLinks.release}
+                  className="inline-flex min-h-11 items-center justify-center rounded-full border border-white/16 bg-white/8 px-5 text-sm font-semibold text-white transition hover:bg-white/12"
+                >
+                  {copy.release.githubReleaseCta}
                 </Link>
               </div>
             </div>

@@ -18,7 +18,7 @@ import type { Localized } from "./i18n";
 export const commonCopy = {
   zh: {
     navItems,
-    headerCta: "Windows 版即将开放",
+    headerCta: "下载 Windows 版",
     mobileMenuOpen: "打开菜单",
     mobileMenuClose: "关闭菜单",
     languageAria: "选择语言",
@@ -34,7 +34,7 @@ export const commonCopy = {
       contactTitle: "联系我们",
       placeholderSuffix: "即将开放",
       feedbackQr: "反馈",
-      feedbackText: "反馈入口整理中<br />欢迎提交产品建议",
+      feedbackText: "扫码加入微信讨论群<br />交流体验、问题与建议",
       copyright: "© 2026 XplorOne. 保留所有权利。",
       privacy: "隐私政策",
       terms: "用户协议",
@@ -50,7 +50,7 @@ export const commonCopy = {
       { href: "/download", label: "Download" },
       { href: "/faq", label: "FAQ" },
     ],
-    headerCta: "Windows release coming soon",
+    headerCta: "Download for Windows",
     mobileMenuOpen: "Open menu",
     mobileMenuClose: "Close menu",
     languageAria: "Choose language",
@@ -66,7 +66,7 @@ export const commonCopy = {
       contactTitle: "Contact",
       placeholderSuffix: "coming soon",
       feedbackQr: "Feedback",
-      feedbackText: "Feedback entry is being prepared<br />Product suggestions are welcome",
+      feedbackText: "Scan to join the WeChat group<br />Share feedback and questions",
       copyright: "© 2026 XplorOne. All rights reserved.",
       privacy: "Privacy",
       terms: "Terms",
@@ -76,9 +76,12 @@ export const commonCopy = {
         { href: "/changelog", label: "Changelog" },
       ],
       connectLinks: [
-        { href: "#github", label: "GitHub", external: true, placeholder: true },
+        { href: "https://github.com/SimonZhangM/XplorOne", label: "GitHub", external: true },
+        { href: "https://github.com/SimonZhangM/XplorOne/releases", label: "GitHub Releases", external: true },
+        { href: "https://github.com/SimonZhangM/XplorOne/issues", label: "Install issues / Bugs", external: true },
+        { href: "https://github.com/SimonZhangM/XplorOne/discussions", label: "Ideas and feedback", external: true },
         { href: "mailto:simonzhang2026@163.com", label: "Contact: simonzhang2026@163.com" },
-        { href: "#feedback", label: "Feedback", placeholder: true, feedbackPopover: true },
+        { href: "#feedback", label: "Discussion group", feedbackPopover: true },
       ],
     },
   },
@@ -88,7 +91,7 @@ export const homeCopy = {
   zh: {
     siteConfig,
     hero: {
-      primaryCta: "Windows 版即将开放",
+      primaryCta: "下载 Windows 版",
       secondaryCta: "查看真实界面",
       extraBadges: ["Local ledger stays on device", "AI reads, never rewrites"],
       screenshotAlt: "XplorOne 工作台首页截图",
@@ -101,7 +104,7 @@ export const homeCopy = {
     },
     questions: {
       eyebrow: "User Questions",
-      title: "你真正关心的，不只是记账",
+      title: "您真正关心的，不只是记账",
       description:
         "对超级个体和自由职业者来说，财务焦虑往往来自“感觉模糊”。官网需要先把这种模糊说中，再给出工作台的答案。",
       compareRows,
@@ -110,13 +113,14 @@ export const homeCopy = {
     capabilities: {
       eyebrow: "Capability Map",
       title: "工作台能力分两层：先结构，再联动",
-      description: "这能让页面从“功能清单”变成“产品架构”：用户知道每个能力为什么存在，也知道 AI 该站在什么位置。",
+      description: "这能让页面从“功能清单”变成“产品架构”：您能知道每个能力为什么存在，也知道 AI 该站在什么位置。",
       groups: capabilityGroups,
     },
     aiFlow: {
       eyebrow: "AI Flow",
-      title: "AI 不漂在外面，它回到真实页面里",
-      description: "新版表达会把 AI 从“聊天窗口噱头”降落到工作流：读结构、给判断、带用户回到页面和筛选结果。",
+      title: "本地助手处理确定性财务工作，AI 助手处理分析与解释",
+      description:
+        "XplorOne 把对话入口拆成两条更清晰的路径：本地助手用于快速查询、录入草稿和基础财务问题，AI 助手用于趋势解释、预算分析和更开放的财务对话。",
       steps: aiFlowSteps,
       screenshotAlt: "XplorOne AI 助手页面截图",
     },
@@ -128,10 +132,12 @@ export const homeCopy = {
     },
     release: {
       eyebrow: "Release Status",
-      title: "Windows 版整理中，官网先承接产品理解",
-      description: "当前阶段不制造假的下载入口，先把定位、截图、FAQ 和更新口径做好，再开放安装包。",
-      downloadCta: "查看下载进度",
+      title: "Windows 版已开放下载",
+      description:
+        "XplorOne v0.4.0 Windows x64 安装包已经开放。您可以直接下载使用，也可以先查看更新日志、GitHub Release 和 FAQ，了解当前版本能力与使用边界。",
+      downloadCta: "下载 Windows 版",
       changelogCta: "查看更新日志",
+      githubReleaseCta: "查看 GitHub Release",
     },
     faq: {
       eyebrow: "FAQ",
@@ -152,7 +158,7 @@ export const homeCopy = {
         "XplorOne is a local-first desktop finance workspace for independents, freelancers, and small operators.",
     },
     hero: {
-      primaryCta: "Windows release coming soon",
+      primaryCta: "Download for Windows",
       secondaryCta: "View real screens",
       extraBadges: ["Core ledger stays on device", "AI can read, not rewrite"],
       screenshotAlt: "XplorOne workspace dashboard screenshot",
@@ -298,21 +304,21 @@ export const homeCopy = {
     },
     aiFlow: {
       eyebrow: "AI Flow",
-      title: "AI belongs inside the real workflow",
+      title: "Local Assistant handles deterministic finance work. AI Assistant handles analysis.",
       description:
-        "Instead of making AI the headline, XplorOne uses it where it helps: reading structure, giving context, and taking you back to the right screen.",
+        "XplorOne splits conversation into two clearer paths: Local Assistant for fast queries, draft entry, and basic finance questions; AI Assistant for trend explanations, budget analysis, and open-ended finance conversation.",
       steps: [
         {
-          title: "Ask a finance question",
-          description: "For example: why did spending rise this month, or which budgets are close to their limit?",
+          title: "Choose an assistant",
+          description: "Start with Local Assistant or AI Assistant so query, entry, analysis, and open conversation each land in the right place.",
         },
         {
-          title: "Read local structure",
-          description: "AI reads books, categories, budgets, and chart context within clearly defined boundaries.",
+          title: "Keep local questions local",
+          description: "Queries, entry, and basic statistics prefer the local core instead of silently asking a model to guess intent.",
         },
         {
-          title: "Return to the actual page",
-          description: "The answer can lead back to filtered data, reports, and the relevant screen.",
+          title: "Use AI for complex analysis",
+          description: "Trends, causes, suggestions, and open-ended finance conversation go through AI Assistant, while writes still require confirmation.",
         },
       ],
       screenshotAlt: "XplorOne AI assistant screenshot",
@@ -361,11 +367,12 @@ export const homeCopy = {
     },
     release: {
       eyebrow: "Release Status",
-      title: "Windows release is being prepared; the site explains the product first",
+      title: "The Windows build is available now",
       description:
-        "We are not publishing a fake download button. The site is being used to clarify positioning, screenshots, FAQ, and release notes before the installer opens.",
-      downloadCta: "View download status",
+        "XplorOne v0.4.0 for Windows x64 is available. You can download it directly, or review the changelog, GitHub Release, and FAQ before installing.",
+      downloadCta: "Download for Windows",
       changelogCta: "View changelog",
+      githubReleaseCta: "View GitHub Release",
     },
     faq: {
       eyebrow: "FAQ",
@@ -383,9 +390,9 @@ export const faqPageCopy = {
       "FAQ 首版优先回答用户真正关心的事：适合谁、和普通记账软件有什么不同、本地优先意味着什么，以及外部 AI 请求边界怎么理解。",
     items: faqItems,
     feedbackEyebrow: "反馈入口",
-    feedbackTitle: "当前先通过官网更新与后续仓库入口承接反馈",
+    feedbackTitle: "反馈建议可以通过 GitHub 和官网入口继续跟进",
     feedbackDescription:
-      "首版还没有单独的邮件表单或等待名单系统，因此这里不会放一个无法承接的假入口。后续公开仓库后，反馈会优先通过 GitHub 和更新日志入口同步承接。",
+      "仓库已经公开，后续问题反馈、建议和发布进展会优先通过 GitHub 与官网更新日志同步承接。",
   },
   en: {
     eyebrow: "FAQ",
@@ -411,22 +418,22 @@ export const faqPageCopy = {
       {
         question: "Will AI upload my data?",
         answer:
-          "The AI assistant can read ledger context for analysis, but it cannot rewrite ledger data directly. When external model providers are enabled, request boundaries depend on the model and feature you choose.",
+          "Core local features do not need to send your books to a model service. When you actively enable AI Assistant and configure your own model API key, XplorOne may send the information required for that AI task to the model service you choose. Local Assistant query and entry flows prefer the local core and do not silently fall back to AI intent guessing. Any write action still requires user confirmation.",
       },
       {
         question: "Which platforms are supported?",
         answer:
-          "The first public release is being prepared around Windows. The download page will continue to reflect the current release status and later platform plans.",
+          "The current official release line is Windows x64. You can get the XplorOne v0.4.0 installer from the download page. macOS, Linux, and other platform builds are not available yet and will be updated as the product progresses.",
       },
       {
         question: "Do I need an API key?",
         answer:
-          "Basic local viewing and management do not depend on an external model. If you enable external AI features, API key requirements depend on the provider and integration mode.",
+          "No. Local bookkeeping, books, accounts, categories, transactions, reports, basic queries, backup, and restore work without an API key. You only need your own model API key when you actively enable AI Assistant for analysis, explanations, or more open-ended finance conversations.",
       },
       {
         question: "Will it be paid?",
         answer:
-          "The current site focuses on product understanding and release preparation. Pricing will be clarified in product updates when the release path is ready.",
+          "Pricing has not been finalized yet. The current release focuses on the Windows build, product boundaries, and user feedback; pricing updates will be published separately when ready.",
       },
       {
         question: "How do backup and migration work?",
@@ -435,20 +442,20 @@ export const faqPageCopy = {
       },
     ],
     feedbackEyebrow: "Feedback",
-    feedbackTitle: "Feedback will first be handled through site updates and the future repository entry",
+    feedbackTitle: "Feedback can now continue through GitHub and the website",
     feedbackDescription:
-      "There is no standalone email form or waitlist in the first site version, so we will not create a fake entry point. Once the repository is public, feedback will be routed through GitHub and changelog updates.",
+      "The repository is public now, so issues, suggestions, and release follow-up can be handled through GitHub and reflected in the website changelog.",
   },
 } as const;
 
 export const downloadPageCopy = {
   zh: {
-    status: "即将开放" as StatusLabel,
-    statusNote: "Windows 版整理中",
-    title: "下载入口暂未开放，但你不会在这里撞墙",
-    description: "首版官网已经上线，Windows 版正在整理发布流程。当前阶段先同步产品状态、支持范围和后续节奏，安装包稍后开放。",
+    status: "已支持" as StatusLabel,
+    statusNote: "Windows x64 安装包已开放",
+    title: "Windows 版已经可以下载",
+    description: "当前开放的是 XplorOne v0.4.0 Windows x64 安装包。您可以直接下载安装，也可以先查看 GitHub 仓库和更新日志，了解本轮版本变化。",
     buttons: {
-      progress: "查看发布进度",
+      progress: "下载 Windows 版",
       github: "访问 GitHub",
       changelog: "查看更新日志",
     },
@@ -456,23 +463,63 @@ export const downloadPageCopy = {
     supportItems: [
       ["官网内容浏览", "已支持"],
       ["功能结构预览", "已支持"],
-      ["Windows 安装包", "即将开放"],
+      ["Windows x64 安装包", "已支持"],
       ["MCP 详细文档", "规划中"],
     ] as [string, StatusLabel][],
+    currentVersion: {
+      eyebrow: "Current Capabilities",
+      title: "v0.4.0 下载后可以做什么",
+      items: [
+        "多账本、账户、分类、预算与流水管理",
+        "首页总览、报表与图表复盘",
+        "本地助手查询与录入",
+        "AI 助手分析与自由对话",
+        "备份、恢复、导出与 .xpl 归档",
+        "本地 API / 只读 MCP 作为进阶能力继续扩展",
+      ],
+    },
+    quickStart: {
+      eyebrow: "Quick Start",
+      title: "第一次使用建议按这 4 步开始",
+      steps: [
+        "下载并安装 Windows 版",
+        "创建或打开一个账本",
+        "先记录一笔流水，查看首页和报表",
+        "需要 AI 分析时，再配置您自己的模型 API Key",
+      ],
+      buttons: {
+        gettingStarted: "查看快速开始",
+        byok: "查看 BYOK 配置说明",
+        privacy: "查看隐私与 AI 边界",
+      },
+    },
+    safety: {
+      title: "安装安全提示",
+      description:
+        "如果 Windows 出现安全提示，请确认安装包来自 XplorOne 官网或官方 GitHub Release。当前 Windows 版安装包名称为 XplorOne Setup 0.4.0.exe。",
+    },
+    feedbackChannels: {
+      title: "反馈建议怎么分流",
+      items: [
+        ["遇到安装问题 / Bug", "提交 GitHub Issue"],
+        ["想法、建议、使用反馈", "进入 GitHub Discussions"],
+        ["商务、合作、授权", "联系 simonzhang2026@163.com"],
+      ],
+    },
     progress: {
       eyebrow: "发布进度",
-      title: "当前处于“官网先行、安装包后补”的阶段",
-      description: "这是一个刻意的发布节奏。先把产品定位、截图、FAQ 和更新口径做好，再开放真正的下载入口。",
+      title: "Windows 版已经进入可下载阶段",
+      description: "官网、更新日志、GitHub Release 和 Windows 安装包已经同步开放，后续会继续补齐更多平台与进阶文档。",
       cards: [
         {
           title: "官网首版",
-          detail: "首页、下载页、FAQ 和更新日志已经可预览，可直接接入 GitHub + Vercel 工作流。",
+          detail: "首页、下载页、FAQ 和更新日志已经上线，并接入 GitHub + Vercel 工作流。",
           status: "已支持" as StatusLabel,
         },
         {
           title: "Windows 安装包",
-          detail: "正在整理发布流程、状态口径与下载承接路径，避免放出一个不可维护的假按钮。",
-          status: "即将开放" as StatusLabel,
+          detail: "XplorOne v0.4.0 Windows x64 安装包已经开放下载。",
+          status: "已支持" as StatusLabel,
         },
         {
           title: "后续二级页",
@@ -482,21 +529,21 @@ export const downloadPageCopy = {
       ],
     },
     github: {
-      eyebrow: "GitHub 状态",
-      title: "仓库入口会在公开时补充，当前先保留真实状态说明",
+      eyebrow: "GitHub Repository",
+      title: "公开产品仓库已经开放，可用于下载版本、查看文档与提交反馈",
       description:
-        "当前官网工程已经按 GitHub + Vercel 自动部署工作流搭建完成，但公开仓库地址尚未在本页固化。为了不制造一个假的外链，这里先明确说明状态：仓库地址将在首版公开时同步补充。",
-      note: "等仓库地址确认后，只需要把一个配置值替换为真实 URL，下载页和 Footer 会自动同步更新。",
+        "XplorOne 的 GitHub 仓库用于版本发布、文档说明、路线更新与社区反馈。XplorOne 是专有软件，并非完整开源项目；请优先通过 Releases 下载 Windows 安装包，不要下载 Source code 作为安装包使用。",
+      note: "如果您想了解最新发布进展，可以优先查看更新日志；如果要提交问题或建议，可以通过 GitHub Issues / Discussions 继续跟进。",
     },
   },
   en: {
-    status: "即将开放" as StatusLabel,
-    statusNote: "Windows release in preparation",
-    title: "The download is not open yet, but this page is not a dead end",
+    status: "已支持" as StatusLabel,
+    statusNote: "Windows x64 installer available",
+    title: "The Windows build is ready to download",
     description:
-      "The first site is live, and the Windows release flow is being prepared. For now, this page shows product status, support scope, and the release path before the installer becomes available.",
+      "XplorOne v0.4.0 is now available as a Windows x64 installer. You can download it directly, or review the GitHub repository and changelog first.",
     buttons: {
-      progress: "View release status",
+      progress: "Download for Windows",
       github: "Visit GitHub",
       changelog: "View changelog",
     },
@@ -504,24 +551,64 @@ export const downloadPageCopy = {
     supportItems: [
       ["Website content", "已支持"],
       ["Feature preview", "已支持"],
-      ["Windows installer", "即将开放"],
+      ["Windows x64 installer", "已支持"],
       ["MCP documentation", "规划中"],
     ] as [string, StatusLabel][],
+    currentVersion: {
+      eyebrow: "Current capability set",
+      title: "What v0.4.0 can do today",
+      items: [
+        "Multiple books, accounts, categories, budgets, and transactions",
+        "Home overview, reports, and chart-based review",
+        "Local Assistant for query and entry",
+        "AI Assistant for analysis and open conversation",
+        "Backup, restore, export, and .xpl archive workflows",
+        "Local API / read-only MCP paths as advanced capabilities",
+      ],
+    },
+    quickStart: {
+      eyebrow: "Quick start",
+      title: "A simple 4-step first run",
+      steps: [
+        "Download and install the Windows build",
+        "Create or open a book",
+        "Record one transaction, then review Home and Reports",
+        "Configure your own model API key only when you need AI analysis",
+      ],
+      buttons: {
+        gettingStarted: "View quick start",
+        byok: "View BYOK setup",
+        privacy: "View privacy and AI boundaries",
+      },
+    },
+    safety: {
+      title: "Installation safety note",
+      description:
+        "If Windows shows a security warning, make sure the installer comes from the XplorOne website or the official GitHub Release. The current installer is named XplorOne Setup 0.4.0.exe.",
+    },
+    feedbackChannels: {
+      title: "Where feedback should go",
+      items: [
+        ["Install issues / bugs", "Open a GitHub Issue"],
+        ["Ideas and product feedback", "Use GitHub Discussions"],
+        ["Business, cooperation, licensing", "Contact simonzhang2026@163.com"],
+      ],
+    },
     progress: {
       eyebrow: "Release Status",
-      title: "The website comes first; installer distribution follows",
+      title: "The Windows build is now downloadable",
       description:
-        "This is intentional. We are clarifying positioning, screenshots, FAQ, and release language before opening the actual download.",
+        "The website, changelog, GitHub Release, and Windows installer are now available, with more platform and advanced documentation to follow.",
       cards: [
         {
           title: "First website version",
-          detail: "Home, download, FAQ, and changelog pages are ready for preview and fit the GitHub + Vercel workflow.",
+          detail: "Home, download, FAQ, and changelog pages are live and connected to the GitHub + Vercel workflow.",
           status: "已支持" as StatusLabel,
         },
         {
           title: "Windows installer",
-          detail: "Release flow, status wording, and download handoff are being prepared to avoid a fragile fake button.",
-          status: "即将开放" as StatusLabel,
+          detail: "XplorOne v0.4.0 for Windows x64 is available for download.",
+          status: "已支持" as StatusLabel,
         },
         {
           title: "Follow-up pages",
@@ -531,11 +618,11 @@ export const downloadPageCopy = {
       ],
     },
     github: {
-      eyebrow: "GitHub Status",
-      title: "The repository entry will be added when it is ready to be public",
+      eyebrow: "GitHub Repository",
+      title: "The public repository is now available",
       description:
-        "The website is already structured for a GitHub + Vercel deployment workflow, but the public repository URL is not fixed on this page yet. Instead of creating a fake external link, we are keeping the status explicit.",
-      note: "Once the repository URL is confirmed, one configuration value can update the download page and footer together.",
+        "The XplorOne GitHub repository is for releases, documentation, roadmap updates, and community feedback. XplorOne is proprietary software, not a fully open-source project; use Releases for the Windows installer rather than downloading Source code as an installer.",
+      note: "For the latest release status, start with the changelog. For issues or suggestions, GitHub Issues / Discussions are now the preferred follow-up path.",
     },
   },
 } as const;
@@ -545,9 +632,9 @@ export const changelogPageCopy = {
     eyebrow: "Release Notes",
     title: "软件更新日志",
     description: "从软件发布历史中提取最新版本信息，并把关键开发脉络整理成中文官网摘要。",
-    currentEyebrow: "Current 0.3 Stage",
+    currentEyebrow: "Current Release Stage",
     currentTitle: "当前阶段详细更新",
-    currentDescription: "0.3.x 仍属于当前开发阶段，因此从 v0.3.1 到最新版本，全部按完整分类说明展示。",
+    currentDescription: "当前官网从最新版本开始，继续保留 0.3.x 阶段以来的重要完整分类说明，便于追踪能力演进。",
     latestEyebrow: "Latest Release",
     releaseEyebrow: "Release Notes",
     summaryLabel: "[更新摘要]",
@@ -561,9 +648,9 @@ export const changelogPageCopy = {
     eyebrow: "Release Notes",
     title: "Software changelog",
     description: "Latest release notes and the product development history behind XplorOne.",
-    currentEyebrow: "Current 0.3 Stage",
+    currentEyebrow: "Current Release Stage",
     currentTitle: "Detailed updates for the current stage",
-    currentDescription: "Because 0.3.x is still the active development stage, releases from v0.3.1 onward are shown in full detail.",
+    currentDescription: "The latest release is shown first, while the detailed 0.3.x history remains available so the capability path stays easy to trace.",
     latestEyebrow: "Latest Release",
     releaseEyebrow: "Release Notes",
     summaryLabel: "[Summary]",
@@ -571,6 +658,128 @@ export const changelogPageCopy = {
     historyTitle: "Historical development notes",
     historyDescription: "The first migration also keeps the 0.3, 0.2, and early development context on the website.",
     releases: [
+      {
+        version: "v0.4.0",
+        date: "2026-04-28",
+        status: "已支持" as StatusLabel,
+        focus: "Local Assistant / AI Assistant split",
+        intro:
+          "This release reorganizes chat into two clearer entry points: Local Assistant for fast queries and entry, and AI Assistant for deeper analysis and open-ended conversation. The query core no longer falls back to AI intent guessing for basic finance questions, and the release also adds assistant switching, avatars, quick scenarios, bilingual display polish, and account alias recognition.",
+        categories: [
+          {
+            emoji: "✨",
+            label: "Added",
+            items: [
+              "Added Local Assistant and AI Assistant as two top-level chat modules, each with its own session pool, avatar, and quick scenarios.",
+              "Added an assistant selection screen for new conversations, plus a switch-assistant entry in the left conversation rail.",
+              "Added chat:local and chat:ai session scopes while keeping legacy chat:query / chat:entry / chat:analysis / chat:free_talk sessions grouped correctly.",
+              "Added shared account alias recognition for query and entry flows, including ICBC-style Chinese and English aliases.",
+              "Added CHAT_CAPABILITY_MATRIX.md to document assistant capabilities, examples, and boundaries.",
+            ],
+          },
+          {
+            emoji: "🔁",
+            label: "Changed",
+            items: [
+              "The query pipeline now resolves through the local query core: local match, local follow-up, or unsupported boundary only, without AI intent fallback.",
+              "Local Assistant now only presents Query / Entry, while AI Assistant presents Analysis / Free Chat instead of showing all four modes everywhere.",
+              "New conversations now start from assistant selection rather than dropping into a legacy single module.",
+              "Home-to-chat launch requests are consumed once by token, avoiding old launch parameters pulling users back after switching inside AI Assistant.",
+              "Public release history is now maintained in the marketing docs release-history files instead of appending the old root changelog.",
+            ],
+          },
+          {
+            emoji: "⚡",
+            label: "Improved",
+            items: [
+              "Improved markdown table rendering in AI conversations.",
+              "Improved Chinese category and account display consistency across query, entry drafts, and analysis context.",
+              "Improved analysis payloads by converting database cent values into readable amounts before sending them to models.",
+              "Improved routing recognition for category growth, period comparison, cash runway, and asset-liability overview questions.",
+              "Improved new-conversation copy, assistant visuals, sidebar actions, and quick scenario chips.",
+            ],
+          },
+          {
+            emoji: "🛠️",
+            label: "Fixed",
+            items: [
+              "Fixed cases where sending from a new conversation could jump into an old session.",
+              "Fixed the first delete click in a new conversation sometimes deleting the top hint instead of the target message.",
+              "Fixed raw abort errors leaking into the web preview conversation failure state.",
+              "Fixed AI responses being cut short by unnecessary output limits.",
+              "Fixed Alipay balance-style questions being misclassified as needing an additional account name.",
+            ],
+          },
+          {
+            emoji: "🔒",
+            label: "Security & stability",
+            items: [
+              "Unified conversation debug and audit fields, including top-level assistant, internal capability, routing reason, query evidence, data evidence, and model usage.",
+              "Strengthened Local Assistant boundaries so local queries and local entry do not silently trigger AI model calls.",
+            ],
+          },
+        ],
+      },
+      {
+        version: "v0.3.10",
+        date: "2026-04-27",
+        status: "已支持" as StatusLabel,
+        focus: "Allocation reporting cleanup and unified interaction components",
+        intro:
+          "This release continues the allocation-effect transition across home, income/expense, calendar, reports, and category drilldowns. It also unifies in-app dialogs and soft dropdowns, improves bilingual details, and lets allocation rows maintain member, project, and note metadata without rewriting the parent transaction.",
+        categories: [
+          {
+            emoji: "✨",
+            label: "Added",
+            items: [
+              "Added a unified in-app dialog layer for confirmation, alert, and input interactions.",
+              "Added a unified soft dropdown component for sidebar filters, settings, and forms.",
+              "Added member, project, and note editing for allocation child rows on the Transactions page.",
+              "Added allocation-category focus when drilling from income/expense categories into transactions, with matching amounts and CSV export scope.",
+            ],
+          },
+          {
+            emoji: "🔁",
+            label: "Changed",
+            items: [
+              "Income/expense categories, calendar statistics, reports, cashflow distribution, home analysis, and AI category analysis now prefer allocation effects.",
+              "Editing a normal parent transaction no longer overwrites existing multi-allocation details; allocation rows update only through explicit split submission.",
+              "The Chinese settings navigation now uses 模型设置, while English keeps Model Service.",
+            ],
+          },
+          {
+            emoji: "⚡",
+            label: "Improved",
+            items: [
+              "Improved year/month dropdowns across transactions, income/expense, accounts, and budgets with centered menus matching the app style.",
+              "Improved multi-entry and split-entry spacing, amount field height, plus-button placement, and source account display.",
+              "Improved allocation child-row backgrounds, borders, emoji sizing, row height, and row-level edit entry.",
+              "Improved unsaved-setting prompts, confirmation dialogs, amount-unit button sizing, and overall spacing.",
+              "Improved recent-transaction account spacing on Home and bilingual account/category display consistency.",
+            ],
+          },
+          {
+            emoji: "🛠️",
+            label: "Fixed",
+            items: [
+              "Fixed remaining browser-native dialogs and input prompts in user-visible flows.",
+              "Fixed legacy native select styling still appearing in sidebars and settings.",
+              "Fixed category-to-transaction drilldowns showing parent transaction amounts instead of matched allocation amounts in some cases.",
+              "Fixed ignored reminders still appearing in the reminder list.",
+              "Fixed some analysis samples and category summaries falling back to parent category fields after split transactions were introduced.",
+            ],
+          },
+          {
+            emoji: "🔒",
+            label: "Security & stability",
+            items: [
+              "Added same-ledger validation before allocation metadata updates to avoid cross-ledger writes.",
+              "Normal transaction edits preserve existing split details, reducing accidental allocation overwrite risk.",
+              "Dialog and input feedback now route through the renderer visual layer for better desktop and preview consistency.",
+            ],
+          },
+        ],
+      },
       {
         version: "v0.3.9",
         date: "2026-04-26",
@@ -948,6 +1157,17 @@ export const changelogPageCopy = {
       },
     ],
     series: [
+      {
+        title: "0.4 series: assistants and local query boundaries",
+        emoji: "🧭",
+        summary:
+          "The 0.4 series starts by reorganizing conversation entry points and making the boundary between local queries and AI analysis much clearer.",
+        items: [
+          "Added separate Local Assistant and AI Assistant entry points for query, entry, analysis, and open conversation.",
+          "Moved basic finance questions onto the local query core instead of silently falling back to AI intent guessing.",
+          "Added assistant switching, session grouping, account alias recognition, quick scenarios, and conversation audit fields.",
+        ],
+      },
       {
         title: "0.3 series: product release line",
         emoji: "🚀",

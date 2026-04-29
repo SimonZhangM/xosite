@@ -5,15 +5,15 @@ export const siteConfig = {
   siteName: "xosite",
   title: "超级个体与自由职业者的本地优先财务工作台",
   altTitle: "帮超级个体与自由职业者看懂钱的财务工作台",
-  heroTitle: "把个人经营的财务，放回你自己的电脑里",
+  heroTitle: "把个人经营的财务，放回您自己的电脑里",
   heroSubtitle:
     "XplorOne 用本地账本、预算、图表和只读 AI，把零散流水整理成可判断的经营结构。",
   heroBadges: ["Local-first", "Read-only AI", "Budget / Cashflow / Assets"],
   description:
     "XplorOne 是一套帮助超级个体和自由职业者看懂资金状态、经营节奏与真实收支的本地财务工作台。",
-  version: "v0.3.9",
-  status: "即将开放" as StatusLabel,
-  githubUrl: "",
+  version: "v0.4.0",
+  status: "已支持" as StatusLabel,
+  githubUrl: "https://github.com/SimonZhangM/XplorOne",
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000",
   contactEmail: "simonzhang2026@163.com",
   wechatQrSrc: "",
@@ -61,7 +61,7 @@ export const trustBoundaries = [
   },
   {
     title: "只读分析",
-    description: "AI 可以帮你读账、看趋势、做分析，但不会直接改动账本数据。",
+    description: "AI 可以帮您读账、看趋势、做分析，但不会直接改动账本数据。",
     icon: "lock",
   },
   {
@@ -95,7 +95,7 @@ export const compareRows = [
   {
     dimension: "云端优先工具",
     value: "依赖在线服务和远端账号",
-    xplorone: "核心账本留在自己的电脑里",
+    xplorone: "核心账本留在您自己的电脑里",
   },
 ];
 
@@ -127,8 +127,8 @@ export const capabilityGroups = [
   },
   {
     eyebrow: "AI & Open Access",
-    title: "再让查询、页面和外部工具接起来",
-    description: "AI 不漂在外面，而是回到真实账本、页面筛选和只读接口上。",
+    title: "再让本地助手、AI 助手和开放接口接起来",
+    description: "本地助手处理确定性财务工作，AI 助手处理分析与解释，开放接口承接进阶工作流。",
     items: [
       {
         title: "AI 查询与分析",
@@ -154,16 +154,16 @@ export const capabilityGroups = [
 
 export const aiFlowSteps = [
   {
-    title: "提出财务问题",
-    description: "例如“本月支出为什么比上月多”或“哪些预算快超了”。",
+    title: "选择助手",
+    description: "在本地助手 / AI 助手之间选择入口，让查询录入和分析对话各自归位。",
   },
   {
-    title: "读取本地结构",
-    description: "AI 在明确边界内读取账本、分类、预算和图表上下文。",
+    title: "本地问题本地处理",
+    description: "查询、录入和基础统计优先走本地内核，不会悄悄调用模型猜意图。",
   },
   {
-    title: "回到真实页面",
-    description: "答案不止是一段文字，还能落到筛选结果、报表和对应页面。",
+    title: "复杂问题交给 AI 分析",
+    description: "趋势、原因、建议和开放式财务对话交给 AI 助手，但任何写入都需要确认。",
   },
 ];
 
@@ -214,43 +214,47 @@ export const faqItems = [
   {
     question: "它和普通记账软件有什么不同？",
     answer:
-      "它不只记录流水，更强调账户结构、预算秩序、图表视角和跨页面联动，帮助你看懂收支结构、账户状态与月度趋势。",
+      "它不只记录流水，更强调账户结构、预算秩序、图表视角和跨页面联动，帮助您看懂收支结构、账户状态与月度趋势。",
   },
   {
     question: "数据真的只在本地吗？",
     answer:
-      "XplorOne 采用本地优先设计。核心账本数据默认保存在你的电脑里，断网也能查账。你的数据不会因为服务器宕机而丢失。",
+      "XplorOne 采用本地优先设计。核心账本数据默认保存在您的电脑里，断网也能查账。您的数据不会因为服务器宕机而丢失。",
   },
   {
     question: "AI 会不会把数据上传出去？",
     answer:
-      "AI 助手可以读取你的账本，但不能改写任何数据。涉及外部 AI 模型时，具体请求边界取决于你启用的模型与功能。",
+      "XplorOne 的核心本地功能不需要把账本发送给模型服务。当您主动启用 AI 助手并配置自己的模型 API Key 时，XplorOne 可能会把完成该次 AI 任务所需的相关信息发送给您选择的模型服务。本地助手支持的查询与录入流程会尽量走本地内核，不会悄悄 fallback 到 AI 猜意图；任何写入动作都需要用户确认。",
   },
   {
     question: "现在支持哪些平台？",
     answer:
-      "首版官网先以 Windows 版为主进行发布准备。下载页会持续同步当前状态，其他平台安排会在后续更新里说明。",
+      "当前正式发布线是 Windows x64 版本。您可以在下载页获取 XplorOne v0.4.0 安装包。macOS、Linux 或其他平台版本暂未开放，后续会根据产品进展更新。",
   },
   {
     question: "需要 API Key 吗？",
     answer:
-      "基础的本地数据查看与管理不依赖外部模型；当你启用外部 AI 能力时，是否需要模型配置与 API Key 取决于具体接入方案。",
+      "不需要。XplorOne 的本地记账、账本管理、账户分类、流水、报表、基础查询、备份恢复等核心能力，都可以在没有 API Key 的情况下使用。只有当您主动启用 AI 助手的分析、解释或更开放的财务对话时，才需要配置您自己的模型 API Key。",
   },
   {
     question: "后续会收费吗？",
     answer:
-      "当前官网首版先聚焦产品能力和下载发布准备。具体收费策略尚未正式公布，会在产品更新中明确说明。",
+      "当前版本已经开放 Windows x64 安装包，收费策略尚未正式公布。后续如涉及授权、订阅或商业版本，会在官网、GitHub Release 和更新日志中明确说明。",
   },
   {
     question: "怎么备份和迁移？",
     answer:
-      "产品支持 .xpl归档格式的导入导出，随时备份、迁移你的完整账本。数据永远属于你，换软件也能零成本迁移。",
+      "产品支持 .xpl归档格式的导入导出，随时备份、迁移您的完整账本。数据永远属于您，换软件也能零成本迁移。",
   },
 ];
 
 export const downloadLinks = {
-  progress: "#release-status",
-  github: "/download#github-status",
+  windows: "https://updates.xplorone.com/stable/win/x64/XplorOne%20Setup%200.4.0.exe",
+  progress: "/changelog",
+  github: "https://github.com/SimonZhangM/XplorOne",
+  release: "https://github.com/SimonZhangM/XplorOne/releases/tag/v0.4.0",
+  issues: "https://github.com/SimonZhangM/XplorOne/issues",
+  discussions: "https://github.com/SimonZhangM/XplorOne/discussions",
   changelog: "/changelog",
 };
 
@@ -262,9 +266,12 @@ export const footerLinks = {
     { href: "/changelog", label: "更新日志" },
   ],
   connect: [
-    { href: "#github", label: "GitHub", external: true, placeholder: true },
+    { href: "https://github.com/SimonZhangM/XplorOne", label: "GitHub", external: true },
+    { href: "https://github.com/SimonZhangM/XplorOne/releases", label: "GitHub Releases", external: true },
+    { href: "https://github.com/SimonZhangM/XplorOne/issues", label: "安装问题 / Bug", external: true },
+    { href: "https://github.com/SimonZhangM/XplorOne/discussions", label: "想法与建议", external: true },
     { href: "mailto:simonzhang2026@163.com", label: "联系作者：simonzhang2026@163.com" },
-    { href: "#feedback", label: "反馈建议", placeholder: true, feedbackPopover: true },
+    { href: "#feedback", label: "交流讨论群", feedbackPopover: true },
   ],
 };
 
@@ -287,7 +294,7 @@ export const websiteUpdates = [
     date: "2026-04-17",
     title: "全站状态标签与下载策略落地",
     summary:
-      '统一使用"即将开放 / 内测中 / 规划中 / 已支持"状态标签，并为未开放下载提供明确替代去处。',
+      '统一使用"即将开放 / 内测中 / 规划中 / 已支持"状态标签，并为下载、GitHub 与更新日志提供明确去处。',
     status: "已支持" as StatusLabel,
   },
 ];
@@ -297,75 +304,197 @@ export const productUpdates = [
     date: "2026-04-17",
     title: "产品能力基线同步到官网",
     summary:
-      "当前版本基线为 v0.2.6，官网同步展示多账本、预算、专业图表、AI 查询与分析、本地 API 与只读 MCP 的整体能力结构。",
+      "当前版本基线已更新到 v0.4.0，官网同步展示多账本、预算、专业图表、本地助手 / AI 助手、本地 API 与只读 MCP 的整体能力结构。",
     status: "已支持" as StatusLabel,
   },
   {
-    date: "2026-04-17",
-    title: "Windows 版发布流程整理中",
+    date: "2026-04-28",
+    title: "Windows x64 安装包已开放",
     summary:
-      "安装包尚未对外开放，下载页先同步首版支持范围、发布进度和后续开放节奏。",
-    status: "即将开放" as StatusLabel,
+      "XplorOne v0.4.0 Windows x64 安装包已经开放下载，官网同步补齐 GitHub Release、安装安全提示和快速开始入口。",
+    status: "已支持" as StatusLabel,
   },
 ];
 
 export const latestSoftwareRelease = {
-  version: "v0.3.9",
-  date: "2026-04-26",
+  version: "v0.4.0",
+  date: "2026-04-28",
   status: "已支持" as StatusLabel,
-  focus: "拆分交易与 allocation 统计口径",
+  focus: "本地助手 / AI 助手双入口",
   intro:
-    "本次更新正式引入“拆分交易”能力。XplorOne 现在将账户真实流水保留在父交易上，把分类、成员、项目、税务和可报销等明细记录到独立的分配行中；分类统计、预算、排行和 AI 分类分析都可以基于 allocation effect 层计算，同时不会重复影响账户余额和资金流。",
+    "本次更新将对话体系重组为“本地助手 / AI助手”两条更清晰的入口：本地助手负责快速查询和录入，AI助手负责深度分析与开放式对话；同时查询内核彻底剥离 AI 兜底，基础财务问题不再交给模型猜 intent，并补齐会话切换、助手头像、快捷场景、中英文展示和账户别名识别等体验细节。",
   categories: [
     {
       emoji: "✨",
       label: "新增",
       items: [
-        "新增 transaction_allocations 数据模型，用于记录收入、支出和退款的分配明细。",
-        "新增记一笔「拆分」模式、流水页 split.svg 拆分入口，以及展开查看 allocation 子行的能力。",
-        "新增交易分配完整性检查与 CSV 拆分明细导出，同时保留父交易导出的银行流水视角。",
+        "新增“本地助手 / AI助手”两个顶层对话模块，各自拥有独立会话池、助手头像和常用场景入口。",
+        "新增新建对话的助手选择页，并在左侧对话栏增加“切换助手”入口。",
+        "新增 chat:local 与 chat:ai 会话 scope，同时兼容旧 chat:query / chat:entry / chat:analysis / chat:free_talk 会话归池展示。",
+        "新增查询与录入共享的账户别名识别能力，工商银行可识别工行、ICBC 和 Industrial and Commercial Bank of China。",
+        "新增 CHAT_CAPABILITY_MATRIX.md，用于维护当前对话体系的能力矩阵、例句和边界。",
       ],
     },
     {
       emoji: "🔁",
       label: "变更",
       items: [
-        "分类统计、预算实际数、项目/成员/税务/可报销统计、Top N 和 AI 分类分析改为基于 allocation effect 层计算。",
-        "收入、支出和退款写入时同步创建或更新 allocation；转账、借款、还款和余额调整继续保持父交易口径。",
-        "备份、恢复、.xpl 和旧数据导入现在会保留或自动补齐 allocation，并在导入/恢复后执行完整性检查。",
+        "查询链路正式收口为本地查询内核：只允许本地规则命中、本地补问或返回不支持边界，不再调用 AI intent 兜底。",
+        "本地助手只显示“查询 / 录入”，AI助手只显示“分析 / 自由对话”，不再让用户在任意模块里看到 4 项全集。",
+        "新建对话默认进入助手选择态，不再直接进入旧的某个单一对话模块。",
+        "首页进入对话页的启动请求改为按 token 只消费一次，避免进入 AI助手后在页内切换时被旧参数拉回。",
+        "对外发布历史固定维护到 marketing docs 下的中英文 release history 文件，不再继续追加仓库根目录旧 changelog。",
       ],
     },
     {
       emoji: "⚡",
       label: "优化",
       items: [
-        "优化流水页拆分体验，新增分类列展开按钮和与原表格对齐的小号 allocation 子行。",
-        "优化记一笔、记多笔和拆分页的下拉菜单、日期时间选择、占位文字字重与双语文案。",
-        "优化 AI 录入草稿与国际化提示，使其更好衔接拆分交易创建链路。",
+        "优化对话中大模型 markdown 表格的展示效果。",
+        "优化中文环境下分类、账户在查询、录入草稿和分析上下文中的展示一致性。",
+        "优化分析链路传给大模型的金额数据，先把数据库 cent 值转换为可读金额。",
+        "优化分类增长、期间对比、资金安全垫、资产负债概览等分析问题的路由识别。",
+        "优化新建对话页的产品文案、助手形象展示、侧栏按钮和快捷场景 chips。",
       ],
     },
     {
       emoji: "🛠️",
       label: "修复",
       items: [
-        "修复从流水页打开拆分编辑器时表格溢出弹窗的问题。",
-        "修复拆分页空值显示、账户占位和原生控件体验不一致的问题。",
-        "修复部分分类统计、报表和导出仍可能依赖父交易 legacy 分类字段的问题。",
+        "修复新建对话发送消息后可能跳到旧会话的问题。",
+        "修复新建对话里第一次点删除图标时可能删除顶部提示语而不是目标消息的问题。",
+        "修复 Web 预览对话失败时直接显示 raw abort 错误的问题。",
+        "修复 AI 回答因为不必要的输出限制而被截断的问题。",
+        "修复“支付宝余额”等账户余额问题被误判为需要补充账户名称的问题。",
       ],
     },
     {
       emoji: "🔒",
       label: "安全与稳定",
       items: [
-        "阻止未平衡拆分草稿落入正式交易表。",
-        "加强 service 层校验，覆盖 allocation 合计、同账本引用、分类类型匹配和退款方向。",
-        "账户余额、对账、导入去重和资金流计算继续只读父交易，避免拆分 allocation 重复计入账户流水。",
+        "统一对话响应调试与审计字段，包括顶层助手、内部能力、路由原因、查询依据、数据依据和模型使用情况。",
+        "强化本地助手边界，确保本地查询和本地录入不会悄悄触发 AI 模型调用。",
       ],
     },
   ],
 };
 
 export const recentSoftwareReleases = [
+  {
+    version: "v0.3.10",
+    date: "2026-04-27",
+    status: "已支持" as StatusLabel,
+    focus: "allocation 统计收口与统一交互组件",
+    intro:
+      "本次更新继续收口拆分交易后的统计口径，让更多首页、收支、日历、报表和分类跳转场景优先基于 allocation effect 层计算；同时统一了软件内弹窗和下拉菜单的视觉体验，补齐多处中英文展示细节，并让拆分明细行可以单独维护成员、项目和备注而不影响父流水。",
+    categories: [
+      {
+        emoji: "✨",
+        label: "新增",
+        items: [
+          "新增统一应用内弹窗层，用于确认、提示和输入类交互。",
+          "新增统一软下拉组件，用于侧边栏筛选、设置项和表单下拉。",
+          "新增流水页拆分 allocation 子行的成员、项目和备注编辑能力。",
+          "新增从收支分类跳转流水时的 allocation 分类聚焦能力，金额展示和 CSV 导出会跟随聚焦范围。",
+        ],
+      },
+      {
+        emoji: "🔁",
+        label: "变更",
+        items: [
+          "收支分类页、日历统计、收入支出报表、现金流分类分布、首页分析和 AI 分类分析进一步改为基于 allocation effect 层计算。",
+          "普通父流水编辑不再误覆盖已有多 allocation 明细；只有显式提交拆分明细时才更新 allocation 行。",
+          "中文设置导航中的模型入口改为“模型设置”，英文仍保持 Model Service。",
+        ],
+      },
+      {
+        emoji: "⚡",
+        label: "优化",
+        items: [
+          "优化流水、收支、账户和预算相关侧边栏的年份 / 月份下拉菜单，改为居中且符合软件统一视觉的菜单。",
+          "优化记一笔的记多笔和记拆分页间距、金额输入框高度、加号按钮位置和来源账户显示。",
+          "优化流水页 allocation 子行的浅色背景、边框、emoji 尺寸、行高和行级编辑入口。",
+          "优化设置页未保存提示位置、统一确认弹窗、显示设置金额单位按钮尺寸和整体间距。",
+          "优化首页最近流水账户列间距，以及中英文环境下账户 / 分类名称展示一致性。",
+        ],
+      },
+      {
+        emoji: "🛠️",
+        label: "修复",
+        items: [
+          "修复用户可见流程里仍出现浏览器原生弹窗和输入框的问题。",
+          "修复侧边栏和设置页仍出现旧式浏览器原生 select 下拉视觉的问题。",
+          "修复按分类跳转流水时，allocation 场景可能显示父流水金额而不是命中分配金额的问题。",
+          "修复已忽略提醒仍可能继续出现在提醒列表的问题。",
+          "修复拆分交易引入后，部分分析样本和分类汇总仍可能回退到父交易分类字段的问题。",
+        ],
+      },
+      {
+        emoji: "🔒",
+        label: "安全与稳定",
+        items: [
+          "allocation 元数据更新前增加同账本校验，避免跨账本误更新。",
+          "普通流水编辑会保留已有拆分明细，降低误覆盖 allocation 数据的风险。",
+          "将应用弹窗和输入提示收口到 renderer 统一视觉层，提升桌面版与预览环境的一致性。",
+        ],
+      },
+    ],
+  },
+  {
+    version: "v0.3.9",
+    date: "2026-04-26",
+    status: "已支持" as StatusLabel,
+    focus: "拆分交易与 allocation 统计口径",
+    intro:
+      "本次更新正式引入“拆分交易”能力。XplorOne 现在将账户真实流水保留在父交易上，把分类、成员、项目、税务和可报销等明细记录到独立的分配行中；分类统计、预算、排行和 AI 分类分析都可以基于 allocation effect 层计算，同时不会重复影响账户余额和资金流。",
+    categories: [
+      {
+        emoji: "✨",
+        label: "新增",
+        items: [
+          "新增 transaction_allocations 数据模型，用于记录收入、支出和退款的分配明细。",
+          "新增记一笔「拆分」模式、流水页 split.svg 拆分入口，以及展开查看 allocation 子行的能力。",
+          "新增交易分配完整性检查与 CSV 拆分明细导出，同时保留父交易导出的银行流水视角。",
+        ],
+      },
+      {
+        emoji: "🔁",
+        label: "变更",
+        items: [
+          "分类统计、预算实际数、项目/成员/税务/可报销统计、Top N 和 AI 分类分析改为基于 allocation effect 层计算。",
+          "收入、支出和退款写入时同步创建或更新 allocation；转账、借款、还款和余额调整继续保持父交易口径。",
+          "备份、恢复、.xpl 和旧数据导入现在会保留或自动补齐 allocation，并在导入/恢复后执行完整性检查。",
+        ],
+      },
+      {
+        emoji: "⚡",
+        label: "优化",
+        items: [
+          "优化流水页拆分体验，新增分类列展开按钮和与原表格对齐的小号 allocation 子行。",
+          "优化记一笔、记多笔和拆分页的下拉菜单、日期时间选择、占位文字字重与双语文案。",
+          "优化 AI 录入草稿与国际化提示，使其更好衔接拆分交易创建链路。",
+        ],
+      },
+      {
+        emoji: "🛠️",
+        label: "修复",
+        items: [
+          "修复从流水页打开拆分编辑器时表格溢出弹窗的问题。",
+          "修复拆分页空值显示、账户占位和原生控件体验不一致的问题。",
+          "修复部分分类统计、报表和导出仍可能依赖父交易 legacy 分类字段的问题。",
+        ],
+      },
+      {
+        emoji: "🔒",
+        label: "安全与稳定",
+        items: [
+          "阻止未平衡拆分草稿落入正式交易表。",
+          "加强 service 层校验，覆盖 allocation 合计、同账本引用、分类类型匹配和退款方向。",
+          "账户余额、对账、导入去重和资金流计算继续只读父交易，避免拆分 allocation 重复计入账户流水。",
+        ],
+      },
+    ],
+  },
   {
     version: "v0.3.8",
     date: "2026-04-24",
@@ -687,6 +816,17 @@ export const recentSoftwareReleases = [
 export const currentPhaseSoftwareReleases = [latestSoftwareRelease, ...recentSoftwareReleases];
 
 export const softwareSeriesHighlights = [
+  {
+    title: "0.4 系列：对话体系与本地查询边界",
+    emoji: "🧭",
+    summary:
+      "0.4 系列从对话入口开始重整产品体验，把本地助手、AI 助手、查询边界和会话结构拆得更清楚。",
+    items: [
+      "新增本地助手 / AI助手双入口，让查询、录入、分析和自由对话各自回到更清晰的位置。",
+      "查询链路收口为本地查询内核，基础财务问题不再悄悄交给模型猜 intent。",
+      "补齐助手切换、会话归池、账户别名识别、快捷场景和对话审计字段。",
+    ],
+  },
   {
     title: "0.3 系列：产品化发布线",
     emoji: "🚀",

@@ -5,6 +5,7 @@ import { useLanguage } from "../i18n";
 import { changelogPageCopy } from "../site-copy";
 
 type ReleaseNote = (typeof changelogPageCopy.zh.releases)[number] | (typeof changelogPageCopy.en.releases)[number];
+const eyebrowClass = "text-sm font-semibold uppercase tracking-[0.2em] text-[var(--brand-warm)]";
 
 function ReleaseNoteBlock({
   release,
@@ -23,7 +24,7 @@ function ReleaseNoteBlock({
     <section className="rounded-[2rem] border border-[var(--line)] bg-white p-7 shadow-[var(--shadow-soft)] sm:p-8">
       <div className="flex flex-wrap items-start justify-between gap-5">
         <div className="max-w-3xl">
-          <p className="font-mono text-sm uppercase tracking-[0.18em] text-[var(--brand-orange)]">
+          <p className={eyebrowClass}>
             {featured ? latestEyebrow : releaseEyebrow}
           </p>
           <div className="mt-4 flex flex-wrap items-center gap-3">
@@ -73,20 +74,14 @@ function ChangelogBody() {
       <Container>
         <SectionHeading
           eyebrow={copy.eyebrow}
-          title={`${copy.title} v0.3.9`}
+          title={`${copy.title} ${copy.releases[0]?.version ?? ""}`}
           description={copy.description}
           align="center"
         />
 
         <div className="mx-auto mt-12 max-w-5xl space-y-10">
           <section>
-            <div className="max-w-3xl">
-              <p className="font-mono text-sm uppercase tracking-[0.18em] text-[var(--brand-orange)]">{copy.currentEyebrow}</p>
-              <h2 className="mt-4 text-3xl font-semibold tracking-tight text-[var(--text-strong)]">{copy.currentTitle}</h2>
-              <p className="mt-3 text-base leading-8 text-[var(--text-muted)]">{copy.currentDescription}</p>
-            </div>
-
-            <div className="mt-8 space-y-8">
+            <div className="space-y-8">
               {copy.releases.map((release, index) => (
                 <ReleaseNoteBlock
                   key={release.version}
@@ -102,7 +97,7 @@ function ChangelogBody() {
 
           <section className="rounded-[2rem] border border-[var(--line)] bg-white p-7 shadow-[var(--shadow-soft)] sm:p-8">
             <div className="max-w-3xl">
-              <p className="font-mono text-sm uppercase tracking-[0.18em] text-[var(--brand-orange)]">{copy.historyEyebrow}</p>
+              <p className={eyebrowClass}>{copy.historyEyebrow}</p>
               <h2 className="mt-4 text-3xl font-semibold tracking-tight text-[var(--text-strong)]">{copy.historyTitle}</h2>
               <p className="mt-3 text-base leading-8 text-[var(--text-muted)]">{copy.historyDescription}</p>
             </div>
@@ -110,9 +105,9 @@ function ChangelogBody() {
             <div className="mt-8 grid gap-5 lg:grid-cols-3">
               {copy.series.map((series) => (
                 <article key={series.title} className="rounded-[1.5rem] border border-[var(--line)] bg-[var(--surface-soft)] p-5">
-                  <h3 className="flex items-center gap-2 text-xl font-semibold text-[var(--text-strong)]">
-                    <span aria-hidden>{series.emoji}</span>
-                    {series.title}
+                  <h3 className="grid min-h-[4.75rem] grid-cols-[auto_1fr] items-start gap-2 text-xl font-semibold text-[var(--text-strong)]">
+                    <span aria-hidden className="pt-1 leading-none">{series.emoji}</span>
+                    <span className="block leading-[1.2]">{series.title}</span>
                   </h3>
                   <p className="mt-3 text-sm leading-7 text-[var(--text-muted)]">{series.summary}</p>
                   <ul className="mt-4 space-y-2 text-sm leading-7 text-[var(--text-muted)]">

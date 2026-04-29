@@ -1,11 +1,13 @@
 {
   "name": "xosite",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "XplorOne 官网项目，展示本地优先财务工作台的首页、下载进度、FAQ 与更新日志。",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "deploy:dry": "powershell -ExecutionPolicy Bypass -File scripts/sync-out.ps1 -DryRun -Delete",
+    "deploy:sync": "powershell -ExecutionPolicy Bypass -File scripts/sync-out.ps1 -Delete",
     "start": "next start",
     "lint": "eslint"
   },

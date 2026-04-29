@@ -25,6 +25,22 @@ export const preferenceEventName = "xosite-preference-change";
 
 const languageStorageKey = "xosite-language";
 
+function detectPreferredLanguageCode(languages: readonly string[]): LanguageCode {
+  for (const language of languages) {
+    const normalized = language.toLowerCase();
+
+    if (normalized.startsWith("zh")) {
+      return "zh-CN";
+    }
+
+    if (normalized.startsWith("en")) {
+      return "en-US";
+    }
+  }
+
+  return "en-US";
+}
+
 function subscribePreference(callback: () => void) {
   window.addEventListener("storage", callback);
   window.addEventListener(preferenceEventName, callback);
@@ -44,7 +60,18 @@ function normalizeLanguage(value: string | null): LanguageCode {
 }
 
 function getStoredLanguageCode(): LanguageCode {
-  return normalizeLanguage(window.localStorage.getItem(languageStorageKey));
+  const storedLanguage = window.localStorage.getItem(languageStorageKey);
+
+  if (storedLanguage) {
+    return normalizeLanguage(storedLanguage);
+  }
+
+  const browserLanguages =
+    window.navigator.languages && window.navigator.languages.length > 0
+      ? window.navigator.languages
+      : [window.navigator.language];
+
+  return detectPreferredLanguageCode(browserLanguages);
 }
 
 function getServerLanguageCode(): LanguageCode {

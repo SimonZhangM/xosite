@@ -28,6 +28,9 @@
 .codex/
 generated-images/
 section-*.png
+.codex-*.png
+.deploy/
+XOSITE_DEPLOYMENT_MEMORY.md
 
 # debug
 npm-debug.log*

@@ -2,7 +2,7 @@ import { DownloadContent } from "./download-content";
 
 export const metadata = {
   title: "下载 | XplorOne",
-  description: "查看 XplorOne Windows 版的发布进度、当前支持范围和后续下载开放节奏。",
+  description: "下载 XplorOne Windows x64 安装包，并查看 GitHub 仓库、当前支持范围与更新日志。",
 };
 
 export default function DownloadPage() {
