@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import Script from "next/script";
 
 import {
   ArchiveIcon,
@@ -20,8 +21,9 @@ import { Container, SiteShell, StatusPill } from "./components/site-chrome";
 import { PreviewSwitcher } from "./components/preview-switcher";
 import { ScrollAnimator } from "./components/scroll-animate";
 import { useLanguage } from "./i18n";
+import { breadcrumbJsonLd, safeJsonLd, webPageJsonLd } from "./seo";
 import { faqPageCopy, homeCopy } from "./site-copy";
-import { downloadLinks } from "./site-data";
+import { downloadLinks, siteConfig as rootSiteConfig } from "./site-data";
 
 const iconMap = {
   archive: ArchiveIcon,
@@ -70,6 +72,20 @@ const trustBoundaryColors = ["#e95556", "#eb7a3b", "#7b5ae5", "#5f86e7"];
 export default function HomePage() {
   return (
     <SiteShell>
+      <Script
+        id="xosite-home-jsonld"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: safeJsonLd([
+            webPageJsonLd({
+              path: "/",
+              name: `${rootSiteConfig.name} | ${rootSiteConfig.title}`,
+              description: rootSiteConfig.description,
+            }),
+            breadcrumbJsonLd([{ name: "首页", path: "/" }]),
+          ]),
+        }}
+      />
       <HomeContent />
     </SiteShell>
   );
@@ -147,7 +163,7 @@ function HomeContent() {
               <div className="relative overflow-hidden rounded-2xl border border-white/14 bg-white shadow-[0_36px_110px_rgba(0,0,0,0.38)]">
                 <div className="relative aspect-[1799/1305] overflow-hidden rounded-2xl bg-white">
                   <Image
-                    src="/screenshots/xoplorone-workbench.png"
+                    src={copy.hero.screenshotSrc}
                     alt={copy.hero.screenshotAlt}
                     fill
                     priority
@@ -302,7 +318,7 @@ function HomeContent() {
               <div className="overflow-hidden rounded-2xl border border-white/14 bg-white shadow-[0_32px_90px_rgba(0,0,0,0.34)]">
                 <div className="relative aspect-[1799/1305] overflow-hidden rounded-2xl bg-white">
                   <Image
-                    src="/screenshots/xoplorone-chat-page.png"
+                    src={copy.aiFlow.screenshotSrc}
                     alt={copy.aiFlow.screenshotAlt}
                     fill
                     className="scale-[1.006] object-cover object-[center_top]"

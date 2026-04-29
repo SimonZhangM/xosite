@@ -21,6 +21,22 @@
 
 - 暂无未发布变更。
 
+## [0.1.6] - 2026-04-29
+
+### 素材与页面整理
+
+- 将首页和预览相关截图统一迁移到 `public/assets/`，并区分中英文版本资源。
+- 下载页、FAQ、隐私页、用户协议页与首页继续围绕统一内容层做结构收口。
+
+### SEO 与站点信息
+
+- 新增统一的 `app/seo.ts`，集中维护组织、网站、软件应用和页面级结构化数据。
+- 首页补入页面级 JSON-LD，站点的 `layout`、`robots`、`sitemap`、`opengraph-image` 与 canonical 相关配置继续同步。
+
+### 文档同步
+
+- 更新 `README.md`、`WEBSITE_BUILD_PROGRESS.md`、`WEBSITE_CHANGELOG.md` 与 `SITE_WIKI_STRUCTURE.md`，同步 `0.1.6` 的页面状态、部署方式与知识库方向。
+
 ## [0.1.5] - 2026-04-29
 
 ### 页面能力补齐

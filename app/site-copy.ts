@@ -94,6 +94,7 @@ export const homeCopy = {
       primaryCta: "下载 Windows 版",
       secondaryCta: "查看真实界面",
       extraBadges: ["Local ledger stays on device", "AI reads, never rewrites"],
+      screenshotSrc: "/assets/xplorone-workbench-cn.png",
       screenshotAlt: "XplorOne 工作台首页截图",
     },
     trust: {
@@ -122,6 +123,7 @@ export const homeCopy = {
       description:
         "XplorOne 把对话入口拆成两条更清晰的路径：本地助手用于快速查询、录入草稿和基础财务问题，AI 助手用于趋势解释、预算分析和更开放的财务对话。",
       steps: aiFlowSteps,
+      screenshotSrc: "/assets/xplorone-chat-page-cn.png",
       screenshotAlt: "XplorOne AI 助手页面截图",
     },
     previews: {
@@ -161,6 +163,7 @@ export const homeCopy = {
       primaryCta: "Download for Windows",
       secondaryCta: "View real screens",
       extraBadges: ["Core ledger stays on device", "AI can read, not rewrite"],
+      screenshotSrc: "/assets/xplorone-workbench-en.png",
       screenshotAlt: "XplorOne workspace dashboard screenshot",
     },
     trust: {
@@ -321,6 +324,7 @@ export const homeCopy = {
           description: "Trends, causes, suggestions, and open-ended finance conversation go through AI Assistant, while writes still require confirmation.",
         },
       ],
+      screenshotSrc: "/assets/xplorone-chat-page-en.png",
       screenshotAlt: "XplorOne AI assistant screenshot",
     },
     previews: {
@@ -331,35 +335,35 @@ export const homeCopy = {
         {
           title: "Dashboard",
           description: "Read monthly income, spending, and assets at a glance.",
-          src: "/screenshots/xoplorone-workbench.png",
+          src: "/assets/xplorone-workbench-en.png",
           alt: "XplorOne dashboard screenshot",
           highlights: ["Monthly flow, assets, and quick actions in one place", "Budgets, recent transactions, and AI sit together", "A daily finance cockpit"],
         },
         {
           title: "Calendar",
           description: "Put financial activity back on a timeline.",
-          src: "/screenshots/xoplorone-calendar-page.png",
+          src: "/assets/xplorone-calendar-page-en.png",
           alt: "XplorOne calendar screenshot",
           highlights: ["Review activity by date", "Make income and spending rhythm visible", "Useful for monthly review"],
         },
         {
           title: "Transactions",
           description: "See clearer structure inside the transaction list.",
-          src: "/screenshots/xoplorone-cashflow-page.png",
+          src: "/assets/xplorone-cashflow-page-en.png",
           alt: "XplorOne transactions screenshot",
           highlights: ["Work with every real inflow and outflow", "Track filters, categories, and accounts", "Move from entries back to structure"],
         },
         {
           title: "Reports",
           description: "Understand operating rhythm through charts.",
-          src: "/screenshots/xoplorone-income-expense-page.png",
+          src: "/assets/xplorone-income-expense-page-en.png",
           alt: "XplorOne reports screenshot",
           highlights: ["Read trends and structure visually", "Separate income, spending, and operating rhythm", "Useful for monthly review and risk checks"],
         },
         {
           title: "Budgets",
           description: "Set spending boundaries before the damage is done.",
-          src: "/screenshots/xoplorone-budget-page.png",
+          src: "/assets/xplorone-budget-page-en.png",
           alt: "XplorOne budgets screenshot",
           highlights: ["See budget progress early", "Set boundaries before spending happens", "Good for subscriptions, projects, and daily costs"],
         },
